@@ -25,6 +25,21 @@ export default new Router({
       path: '/recharge',
       name: 'Recharge',
       component: _ => import('@/pages/Recharge')
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: _ => import('@/pages/Register')
+    },
+    {
+      path: '/reset-password',
+      name: 'ResetPassword',
+      component: _ => import('@/pages/ResetPassword')
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: _ => import('@/pages/Login')
     }
   ]
 })

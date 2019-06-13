@@ -1,6 +1,6 @@
 <template>
   <div>
-    <checklist title="选择充值金额" :options="options" v-model="selVal" :max="1"></checklist>
+    <checklist title="选择充值金额" :options="options" v-model="selVal" :max="1" :min="1"></checklist>
     <box gap="10px 10px">
       <x-button type="primary">确定</x-button>
     </box>
@@ -15,9 +15,9 @@ export default {
     Checklist, Box, XButton
   },
   data: _ => ({
-    options: [{key: '100金币(1元)', value: 1}, {key: '1200金币(10元)', value: 10}, {key: '11000金币(100元)', value: 100}],
+    options: [{value: '100金币(1元)', key: 1}, {value: '1200金币(10元)', key: 10}, {value: '11000金币(100元)', key: 100}],
     selVal: [1]
-  }),
+  })
 }
 </script>
 

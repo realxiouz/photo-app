@@ -19,6 +19,9 @@ export default {
   data: _ => ({
     coin: 0
   }),
+  mounted () {
+
+  }
 }
 </script>
 

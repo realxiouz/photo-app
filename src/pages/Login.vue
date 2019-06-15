@@ -15,7 +15,6 @@
       ></x-input>
       <x-input title="密码 " placeholder="请输入密码" v-model="formBean.password" novalidate :show-clear="false" placeholder-align="left" type="password" :max="12"></x-input>
       <x-switch title="记住密码" v-model="rememberMe"></x-switch>
-      </x-input>
     </group>
 
     <box gap="100px 10px 50px">

@@ -1,16 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
-    },
     {
       path: '/user-center',
       name: 'UserCenter',
@@ -40,6 +34,15 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: _ => import('@/pages/Login')
+    },
+    {
+      path: '/',
+      redirect: '/home'
+    },
+    {
+      path: '/home',
+      name: 'Home',
+      component: _ => import('@/pages/Home')
     }
   ]
 })

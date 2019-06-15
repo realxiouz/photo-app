@@ -33,14 +33,14 @@ export default {
   data () {
     return {
       group1: [
-        {title: '我的钱包', src: '../assets/vux_logo.png', link: '/my-wallet'},
-        {title: '我的订单', src: '../assets/vux_logo.png', link: ''}
+        {title: '我的钱包', src: require('../assets/vux_logo.png'), link: '/my-wallet'},
+        {title: '我的订单', src: require('../assets/vux_logo.png'), link: ''}
       ],
       group2: [
-        {title: '我的关注', src: '../assets/vux_logo.png', link: ''}
+        {title: '我的关注', src: require('../assets/vux_logo.png'), link: ''}
       ],
       group3: [
-        {title: '红包任务', src: '../assets/vux_logo.png', link: ''}
+        {title: '红包任务', src: require('../assets/vux_logo.png'), link: ''}
       ]
     }
   }

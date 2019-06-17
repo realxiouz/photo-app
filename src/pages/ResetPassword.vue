@@ -30,22 +30,21 @@
       <x-button type="primary" @click.native="handleOk">确定</x-button>
     </box>
     <div>
-      <div style="color: #999999;text-align: center;font-size: 14px">{{webName}}</div>
-      <div style="color: #999999;text-align: center;font-size: 12px">{{copyRight}}</div>
+      <div style="color: #999999;text-align: center;font-size: 14px">{{info.webName}}</div>
+      <div style="color: #999999;text-align: center;font-size: 12px">{{info.copyRight}}</div>
     </div>
   </div>
 </template>
 
 <script>
 import { Box, XButton, Group, XInput, Alert, AlertModule } from 'vux'
+import { mapState } from 'vuex'
 
 export default {
   components: {
     Box, XButton, Group, XInput, Alert, AlertModule
   },
   data: _ => ({
-    webName: '美图网',
-    copyRight: 'Copyright © 2019 fenun.cn',
     formBean: {
       phone: '',
       code: '',
@@ -56,6 +55,9 @@ export default {
     handleOk () {
       console.log(this.formBean)
     }
+  },
+  computed: {
+    ...mapState(['info'])
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <search/>
-    <router-link v-for="n in 100" :key="n" :to="`/photo-detail/${n}`">{{n}}</router-link>
+    <div v-for="n in 100" :key="n">{{n}}</div>
     <tabbar>
       <tabbar-item v-for="(i, inx) in tabs" :key="inx" :link="i.link">
         <img slot="icon" :src="i.src">
@@ -22,7 +22,7 @@ import {
   XSwitch,
   Tabbar,
   TabbarItem
-} from 'vux'
+} from "vux";
 
 export default {
   components: {
@@ -43,13 +43,13 @@ export default {
       {src: require('../assets/vux_logo.png'), label: '首页', link: '/home'},
       {src: require('../assets/vux_logo.png'), label: '套图', link: '/user-center'},
       {src: require('../assets/vux_logo.png'), label: '视屏', link: '/user-center'},
-      {src: require('../assets/vux_logo.png'), label: '我', link: '/user-center'}
+      {src: require('../assets/vux_logo.png'), label: '我', link: '/user-center'},
     ]
   }),
   methods: {
-    handleOk () {
-      console.log(this.formBean)
+    handleOk() {
+      console.log(this.formBean);
     }
   }
-}
+};
 </script>

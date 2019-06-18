@@ -1,11 +1,19 @@
 <template>
   <div>
     <div>
-      <previewer :list="list" ref="previewer" @on-index-change="handleChange" @on-close="handleClose"></previewer>
+      <!-- <previewer :list="list" ref="previewer" @on-index-change="handleChange" @on-close="handleClose"></previewer> -->
+      <previewer :list="list" ref="previewer" @on-index-change="handleChange" :options="options"></previewer>
     </div>
 
-    <alert v-model="showBuyDialog" title="最后一张了" button-text="打赏观看" @on-hide="preCharge">
-      {{ 'test' }}
+    <div class="tip" v-if="!isBuy">
+      <div style="color: #fff;font-size:14px">打赏 <span style="color: #f5b527">{{coin}}</span> 金币观看完整版 {{totalCount}} 张</div>
+      <div><x-button mini type="primary" @click.native="preCharge">打赏</x-button></div>
+    </div>
+
+    <alert v-model="showBuyDialog" button-text="打赏观看" @on-hide="preCharge">
+      <div>您已观看了 {{list.length}} 张</div>
+      <div>只需要打赏<span style="color:#f5b527"> {{coin}} </span>金币</div>
+      <div>就能观看完整版</div>
     </alert>
   </div>
 </template>
@@ -34,9 +42,18 @@ export default {
         h: 1800
       }
     ],
-    isBuy: false,
+    showBuyDialog: false,
+    options: {
+      closeEl: false,
+      tapToClose: false,
+      closeOnScroll: false,
+      pinchToClose: false,
+      closeOnVerticalDrag: false
+    },
 
-    showBuyDialog: false
+    totalCount: 50,
+    isBuy: false,
+    coin: 100
   }),
   methods: {
     ...mapMutations(['setRedirectPath']),
@@ -60,3 +77,20 @@ export default {
   }
 }
 </script>
+
+<style lang="less" scoped>
+.tip {
+  position:absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1501;
+  background: #000;
+  height: 60px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+</style>

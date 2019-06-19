@@ -73,6 +73,14 @@ const router = new Router({
       meta: {
         title: '套图'
       }
+    },
+    {
+      path: '/user/:id',
+      name: 'User',
+      component: _ => import('@/pages/User'),
+      meta: {
+        title: '他人主页'
+      }
     }
   ]
 })

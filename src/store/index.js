@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     info: {
-      webName: '美图网',
+      webName: '网赚网',
       copyRight: 'Copyright © 2019 fenun.cn'
     },
     user: null,

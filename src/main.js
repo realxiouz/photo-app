@@ -5,7 +5,10 @@ import App from './App'
 import router from '@/router'
 import store from '@/store'
 
-import { Search, Previewer, Alert, XButton } from 'vux'
+import { Search, Previewer, Alert, XButton, LoadingPlugin, Scroller, ToastPlugin, ButtonTab, ButtonTabItem } from 'vux'
+
+Vue.use(LoadingPlugin)
+Vue.use(ToastPlugin)
 
 FastClick.attach(document.body)
 
@@ -15,6 +18,9 @@ Vue.component('search', Search)
 Vue.component('Previewer', Previewer)
 Vue.component('Alert', Alert)
 Vue.component('XButton', XButton)
+Vue.component('Scroller', Scroller)
+Vue.component('ButtonTab', ButtonTab)
+Vue.component('ButtonTabItem', ButtonTabItem)
 
 /* eslint-disable no-new */
 new Vue({

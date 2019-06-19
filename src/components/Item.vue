@@ -5,7 +5,7 @@
       <img :src="bean.src">
       <div class="count">{{bean.count ? `${bean.count}金币` : '免费'}}</div>
     </div>
-    <div class="auth-info" @click.native="toAuth">
+    <div class="auth-info" @click="toAuth">
       <div class="ava-wrap">
         <img :src="bean.avatar">
       </div>
@@ -37,14 +37,12 @@ export default {
       } else if (this.type === 2) {
         path = `/video-detail/${this.bean.id}`
       }
-      console.log(1)
       if (path) {
         this.$router.push({path})
       }
-      console.log(2)
     },
     toAuth () {
-
+      this.$router.push({path: `/user/${this.bean.userId}`})
     }
   }
 }

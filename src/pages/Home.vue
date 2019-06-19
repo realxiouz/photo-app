@@ -41,8 +41,8 @@ export default {
   data: _ => ({
     tabs: [
       {src: require('../assets/vux_logo.png'), label: '首页', link: '/home'},
-      {src: require('../assets/vux_logo.png'), label: '套图', link: '/user-center'},
-      {src: require('../assets/vux_logo.png'), label: '视屏', link: '/user-center'},
+      {src: require('../assets/vux_logo.png'), label: '套图', link: '/photos'},
+      {src: require('../assets/vux_logo.png'), label: '视屏', link: '/videos'},
       {src: require('../assets/vux_logo.png'), label: '我', link: '/user-center'}
     ],
     list: [

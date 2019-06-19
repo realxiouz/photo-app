@@ -81,12 +81,35 @@ const router = new Router({
       meta: {
         title: '他人主页'
       }
+    },
+    {
+      path: '/videos',
+      name: 'Videos',
+      component: _ => import('@/pages/Videos'),
+      meta: {
+        title: '视频'
+      }
+    },
+    {
+      path: '/photos',
+      name: 'Photos',
+      component: _ => import('@/pages/Photos'),
+      meta: {
+        title: '套图'
+      }
+    },
+    {
+      path: '/video-detail/:id',
+      name: 'VideoDetail',
+      component: _ => import('@/pages/VideoDetail'),
+      meta: {
+      }
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title ? to.meta.title : store.state.info.webName
+  document.title = to.meta.title ? `${to.meta.title}_${store.state.info.webName}` : store.state.info.webName
   if (to.path === '/user-center' && !store.state.user) {
     next('/login')
   }

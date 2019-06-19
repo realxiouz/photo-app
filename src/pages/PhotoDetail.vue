@@ -25,11 +25,11 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
-import { setTimeout } from "timers";
+import { mapState, mapMutations } from 'vuex'
+
 export default {
-  mounted() {
-    this.getData();
+  mounted () {
+    this.getData()
   },
   data: _ => ({
     list: [],
@@ -47,54 +47,54 @@ export default {
     coin: 100
   }),
   methods: {
-    ...mapMutations(["setRedirectPath"]),
-    handleChange(val) {
+    ...mapMutations(['setRedirectPath']),
+    handleChange (val) {
       if (val.currentIndex === this.list.length - 1 && !this.isBuy) {
-        this.showBuyDialog = true;
+        this.showBuyDialog = true
       }
     },
-    handleClose() {
-      this.$router.go(-1);
+    handleClose () {
+      this.$router.go(-1)
     },
-    preCharge() {
+    preCharge () {
       if (!this.user) {
-        this.setRedirectPath(this.$route.path);
-        this.$router.push({ path: "/login" });
+        this.setRedirectPath(this.$route.path)
+        this.$router.push({ path: '/login' })
       }
     },
-    getData() {
+    getData () {
       this.$vux.loading.show({
-        text: '加载中',
+        text: '加载中'
       })
       setTimeout(_ => {
         this.list = [
           {
-            src: "http://file.idray.com/Upload/9900/5233/132037832580658913.jpg",
+            src: 'http://file.idray.com/Upload/9900/5233/132037832580658913.jpg',
             w: 1200,
             h: 1800
           },
           {
-            src: "http://file.idray.com/Upload/9900/5233/132037832580658913.jpg",
+            src: 'http://file.idray.com/Upload/9900/5233/132037832580658913.jpg',
             w: 1200,
             h: 1800
           },
           {
-            src: "http://file.idray.com/Upload/9900/5233/132037832580658913.jpg",
+            src: 'http://file.idray.com/Upload/9900/5233/132037832580658913.jpg',
             w: 1200,
             h: 1800
           }
         ]
         this.$nextTick(_ => {
-          this.$refs.previewer.show(0);
+          this.$refs.previewer.show(0)
         })
         this.$vux.loading.hide()
       }, 3000)
     }
   },
   computed: {
-    ...mapState(["user"])
+    ...mapState(['user'])
   }
-};
+}
 </script>
 
 <style lang="less" scoped>

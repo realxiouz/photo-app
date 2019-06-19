@@ -1,6 +1,7 @@
 <template>
-  <scroller lock-x use-pullup
-    @on-pullup-loading="load1"
+  <scroller
+    lock-x
+    @on-scroll-bottom="handleMore"
     ref="pv"
   >
     <div>
@@ -11,7 +12,7 @@
         <div class="name">{{userInfo.name}}</div>
         <div class="dis">简介：{{userInfo.dis ? userInfo.dis : '暂无简介'}}</div>
         <div style="text-align:center">
-          <x-button mini  @click.native="handleFollow">{{userInfo.isFollow ? '已关注' : '关注'}}</x-button>
+          <x-button mini @click.native="handleFollow" :type="userInfo.isFollow ? 'primary': 'default'">{{userInfo.isFollow ? '已关注' : '关注'}}</x-button>
         </div>
       </div>
       <div style="padding: 0px 15px;margin-top:10px">
@@ -35,7 +36,6 @@ export default {
     this.getData()
   },
   data: _ => ({
-    isFollow: false,
     userInfo: {
       photoCount: 100,
       videoCount: 30,
@@ -44,15 +44,22 @@ export default {
       isFollow: false
     },
     tabInx: 0,
-    list: []
+    list: [],
+
+    page: 1,
+    isLoading: false,
+    isEnd: false
+
   }),
   methods: {
-    getData () {
+    getData (resetPage = false) {
       this.$vux.loading.show({
-        text: '加载中',
+        text: '加载中'
       })
+      this.isLoading = true
+      let page = resetPage ? 1 : this.page
       setTimeout(_ => {
-        this.list = [
+        let data = [
           {
             id: 1,
             title: '花漾写真 [HuaYang] 2019.06.10 VOL.146 王雨纯',
@@ -61,7 +68,7 @@ export default {
             avatar: 'http://file.idray.com//Image/Brand/huayang.jpg!wh50',
             name: '花漾show',
             time: '2019-06-10',
-            userId: 12,
+            userId: 12
           },
           {
             id: 2,
@@ -71,7 +78,7 @@ export default {
             avatar: 'http://file.idray.com//Image/Brand/huayang.jpg!wh50',
             name: '花漾show',
             time: '2019-06-10',
-            userId: 4,
+            userId: 4
           },
           {
             id: 3,
@@ -81,7 +88,7 @@ export default {
             avatar: 'http://file.idray.com//Image/Brand/huayang.jpg!wh50',
             name: '花漾show',
             time: '2019-06-10',
-            userId: 1,
+            userId: 1
           },
           {
             id: 4,
@@ -91,13 +98,18 @@ export default {
             avatar: 'http://file.idray.com//Image/Brand/huayang.jpg!wh50',
             name: '花漾show',
             time: '2019-06-10',
-            userId: 2,
+            userId: 2
           }
         ]
-        this.$nextTick(_ => {
+        if (page === 1) {
+          this.list = []
+        }
+        this.list.push(...data)
+        setTimeout(_ => {
           this.$refs.pv.reset()
-        })
+        }, 500)
         this.$vux.loading.hide()
+        this.isLoading = false
       }, 3000)
     },
 
@@ -108,10 +120,24 @@ export default {
           text: '操作成功'
         })
       }, 1500)
+    },
+
+    handleMore () {
+      if (!this.isLoading) {
+        this.page++
+        this.getData()
+      }
     }
   },
   components: {
     Item
+  },
+  watch: {
+    tabInx: {
+      handler (val) {
+        this.getData(true)
+      }
+    }
   }
 }
 </script>

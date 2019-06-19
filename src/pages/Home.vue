@@ -54,7 +54,7 @@ export default {
         avatar: 'http://file.idray.com//Image/Brand/huayang.jpg!wh50',
         name: '花漾show',
         time: '2019-06-10',
-        userId: 12,
+        userId: 12
       },
       {
         id: 2,
@@ -64,7 +64,7 @@ export default {
         avatar: 'http://file.idray.com//Image/Brand/huayang.jpg!wh50',
         name: '花漾show',
         time: '2019-06-10',
-        userId: 4,
+        userId: 4
       },
       {
         id: 3,
@@ -74,7 +74,7 @@ export default {
         avatar: 'http://file.idray.com//Image/Brand/huayang.jpg!wh50',
         name: '花漾show',
         time: '2019-06-10',
-        userId: 1,
+        userId: 1
       },
       {
         id: 4,
@@ -84,7 +84,7 @@ export default {
         avatar: 'http://file.idray.com//Image/Brand/huayang.jpg!wh50',
         name: '花漾show',
         time: '2019-06-10',
-        userId: 2,
+        userId: 2
       }
     ]
   }),

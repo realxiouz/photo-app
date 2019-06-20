@@ -1,7 +1,12 @@
 <template>
   <div>
-    <search/>
-    <item v-for="(i, inx) in list" :key="inx" :bean="i" :type="1" />
+    <search style="position: fixed;top: 0px; z-index:500"/>
+    <scroller scroller lock-x>
+      <div style="padding: 44px 0 53px 0">
+        <item v-for="(i, inx) in list" :key="inx" :bean="i" :type="1"/>
+      </div>
+    </scroller>
+
     <tabbar style="position: fixed">
       <tabbar-item v-for="(i, inx) in tabs" :key="inx" :link="i.link">
         <img slot="icon" :src="i.src">
@@ -40,16 +45,29 @@ export default {
   },
   data: _ => ({
     tabs: [
-      {src: require('../assets/vux_logo.png'), label: '首页', link: '/home'},
-      {src: require('../assets/vux_logo.png'), label: '套图', link: '/photos'},
-      {src: require('../assets/vux_logo.png'), label: '视屏', link: '/videos'},
-      {src: require('../assets/vux_logo.png'), label: '我', link: '/user-center'}
+      { src: require('../assets/vux_logo.png'), label: '首页', link: '/home' },
+      {
+        src: require('../assets/vux_logo.png'),
+        label: '套图',
+        link: '/photos'
+      },
+      {
+        src: require('../assets/vux_logo.png'),
+        label: '视屏',
+        link: '/videos'
+      },
+      {
+        src: require('../assets/vux_logo.png'),
+        label: '我',
+        link: '/user-center'
+      }
     ],
     list: [
       {
         id: 1,
         title: '花漾写真 [HuaYang] 2019.06.10 VOL.146 王雨纯',
-        src: 'http://file.idray.com/Upload/9900/5299/132051666191572568.jpg!wh400',
+        src:
+          'http://file.idray.com/Upload/9900/5299/132051666191572568.jpg!wh400',
         count: 0,
         avatar: 'http://file.idray.com//Image/Brand/huayang.jpg!wh50',
         name: '花漾show',
@@ -59,7 +77,8 @@ export default {
       {
         id: 2,
         title: '花漾写真 [HuaYang] 2019.06.10 VOL.146 王雨纯',
-        src: 'http://file.idray.com/Upload/9900/5299/132051666191572568.jpg!wh400',
+        src:
+          'http://file.idray.com/Upload/9900/5299/132051666191572568.jpg!wh400',
         count: 59,
         avatar: 'http://file.idray.com//Image/Brand/huayang.jpg!wh50',
         name: '花漾show',
@@ -69,7 +88,8 @@ export default {
       {
         id: 3,
         title: '花漾写真 [HuaYang] 2019.06.10 VOL.146 王雨纯',
-        src: 'http://file.idray.com/Upload/9900/5299/132051666191572568.jpg!wh400',
+        src:
+          'http://file.idray.com/Upload/9900/5299/132051666191572568.jpg!wh400',
         count: 0,
         avatar: 'http://file.idray.com//Image/Brand/huayang.jpg!wh50',
         name: '花漾show',
@@ -79,7 +99,8 @@ export default {
       {
         id: 4,
         title: '花漾写真 [HuaYang] 2019.06.10 VOL.146 王雨纯',
-        src: 'http://file.idray.com/Upload/9900/5299/132051666191572568.jpg!wh400',
+        src:
+          'http://file.idray.com/Upload/9900/5299/132051666191572568.jpg!wh400',
         count: 0,
         avatar: 'http://file.idray.com//Image/Brand/huayang.jpg!wh50',
         name: '花漾show',
@@ -88,8 +109,6 @@ export default {
       }
     ]
   }),
-  methods: {
-
-  }
+  methods: {}
 }
 </script>

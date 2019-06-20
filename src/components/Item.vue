@@ -53,6 +53,9 @@ export default {
   padding: 15px;
   margin-top: 10px;
   background: #fff;
+  &:first-child{
+    margin-top: 0px;
+  }
   .title {
     font-weight: 400;
     font-size: 17px;
@@ -69,6 +72,7 @@ export default {
     > img {
       max-width: 100%;
       min-height: 200px;
+      height: 200px;
       margin-right: auto;
       margin-left: auto;
       vertical-align: middle;

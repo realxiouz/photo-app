@@ -12,8 +12,21 @@
         placeholder-align="left"
         :max="11"
         is-type="china-mobile"
+        required
+        ref="phone"
       ></x-input>
-      <x-input title="密码 " placeholder="请输入密码" v-model="formBean.password" novalidate :show-clear="false" placeholder-align="left" type="password" :max="12"></x-input>
+      <x-input
+        title="密码 "
+        placeholder="请输入密码"
+        v-model="formBean.password"
+        :show-clear="false"
+        placeholder-align="left"
+        type="password"
+        :max="12"
+        required
+        :is-type="v => ({valid: v.length >= 4, msg: '4-12密码'})"
+        ref="password"
+      ></x-input>
       <x-switch title="记住密码" v-model="rememberMe"></x-switch>
     </group>
 
@@ -25,22 +38,21 @@
       <router-link to="/reset-password">找回密码</router-link>
     </div>
     <div>
-      <div style="color: #999999;text-align: center;font-size: 14px">{{webName}}</div>
-      <div style="color: #999999;text-align: center;font-size: 12px">{{copyRight}}</div>
+      <div style="color: #999999;text-align: center;font-size: 14px">{{info.webName}}</div>
+      <div style="color: #999999;text-align: center;font-size: 12px">{{info.copyRight}}</div>
     </div>
   </div>
 </template>
 
 <script>
 import { Box, XButton, Group, XInput, Alert, AlertModule, XSwitch } from 'vux'
+import { mapState } from 'vuex'
 
 export default {
   components: {
     Box, XButton, Group, XInput, Alert, AlertModule, XSwitch
   },
   data: _ => ({
-    webName: '美图网',
-    copyRight: 'Copyright © 2019 fenun.cn',
     formBean: {
       phone: '',
       password: ''
@@ -49,8 +61,19 @@ export default {
   }),
   methods: {
     handleOk () {
+      if (!this.$refs.phone.valid) {
+        this.$vux.toast.text('请输入正确的手机号码')
+        return
+      }
+      if (!this.$refs.password.valid) {
+        this.$vux.toast.text('请输入4-12位密码')
+        return
+      }
       console.log(this.formBean)
     }
+  },
+  computed: {
+    ...mapState(['info'])
   }
 }
 </script>

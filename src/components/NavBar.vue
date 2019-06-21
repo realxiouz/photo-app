@@ -19,5 +19,5 @@ export default {
       {src: require('../assets/me.png'), active: require('../assets/me-active.png'), label: '我', link: '/user-center'}
     ]
   })
-};
+}
 </script>

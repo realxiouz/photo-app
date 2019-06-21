@@ -28,9 +28,8 @@
 <script>
 import { Group, Cell } from 'vux'
 import { mapState } from 'vuex'
-import { login } from '@/utils/api'
+// import { login } from '@/utils/api'
 import NavBottom from '@/components/NavBar'
-
 
 export default {
   components: {

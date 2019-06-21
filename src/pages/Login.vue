@@ -112,6 +112,7 @@ export default {
           if (this.leftSecond <= 0) {
             clearInterval(this.tId)
             this.lockedForCode = false
+            this.leftSecond = 60
           }
         }, 1000)
       })

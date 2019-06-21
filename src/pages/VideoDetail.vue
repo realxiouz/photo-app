@@ -13,6 +13,20 @@
     <group>
       <x-textarea :max="200" placeholder="购买后可评价资源" v-model="post"></x-textarea>
     </group>
+
+    <group>
+      <card :header="{title: '最新评论'}" :footer="{title: '查看更多'}">
+        <div slot="content">
+          <div style="display: flex;padding:15px;border-bottom: 1px solid #ddd;" v-for="(i, inx) in comments" :key="inx">
+            <img :src="i.avatar" alt="" style="width:60px;height:60px;margin-right:10px">
+            <div>
+              <div style="font-size:17px;font-weight:400">{{i.name}}</div>
+              <div style="font-size:13px;color: #999">{{i.comment}}</div>
+            </div>
+          </div>
+        </div>
+      </card>
+    </group>
     <alert v-model="showBuyDialog" button-text="打赏观看" @on-hide="preCharge">
       <div>您已观看了30秒</div>
       <div>
@@ -33,7 +47,25 @@ export default {
     coin: 100,
 
     showBuyDialog: false,
-    post: ''
+    post: '',
+
+    comments: [
+      {
+        name: '匿名用户',
+        avatar: 'http://thirdwx.qlogo.cn/mmopen/MUB8P9Xqe5pib8snMfX0Bd17DRjCLp6yTcjQpaM9ic6ribX8bVQnoJ8xNxOPsWJ9k1B6rJabAI7IfwNk7wlcWwcnuU8I0XAVGRt/132',
+        comment: '楼主辛苦了'
+      },
+      {
+        name: '匿名用户',
+        avatar: 'http://thirdwx.qlogo.cn/mmopen/MUB8P9Xqe5pib8snMfX0Bd17DRjCLp6yTcjQpaM9ic6ribX8bVQnoJ8xNxOPsWJ9k1B6rJabAI7IfwNk7wlcWwcnuU8I0XAVGRt/132',
+        comment: '楼主辛苦了'
+      },
+      {
+        name: '匿名用户',
+        avatar: 'http://thirdwx.qlogo.cn/mmopen/MUB8P9Xqe5pib8snMfX0Bd17DRjCLp6yTcjQpaM9ic6ribX8bVQnoJ8xNxOPsWJ9k1B6rJabAI7IfwNk7wlcWwcnuU8I0XAVGRt/132',
+        comment: '楼主辛苦了'
+      }
+    ]
   }),
   methods: {
     ...mapMutations(['setRedirectPath']),
@@ -66,7 +98,7 @@ export default {
   padding: 15px 10px;
   background: #fff;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-bottom: 15px;
 }
 </style>

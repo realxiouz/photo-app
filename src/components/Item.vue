@@ -2,7 +2,7 @@
   <div class="item-wrap">
     <div class="title" @click="toDetail">{{bean.title}}</div>
     <div class="img-wrap" @click="toDetail">
-      <img :src="bean.src">
+      <img :src="bean.src" :style="`height: ${type === 1 ? '375px' : '200px'}`">
       <div class="count">{{bean.count ? `${bean.count}金币` : '免费'}}</div>
     </div>
     <div class="auth-info" @click="toAuth">
@@ -70,9 +70,10 @@ export default {
   .img-wrap {
     position: relative;
     > img {
-      max-width: 100%;
-      min-height: 200px;
-      height: 200px;
+      // max-width: 100%;
+      // min-height: 200px;
+      // height: 200px;
+      width: 100%;
       margin-right: auto;
       margin-left: auto;
       vertical-align: middle;

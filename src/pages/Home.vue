@@ -1,7 +1,12 @@
 <template>
   <div>
-    <search style="position: fixed;top: 0px; z-index:500" />
-    <tab style="position: fixed;top: 44px; z-index:500;left:0;right:0" v-model="tabInx"> 
+    <search
+      style="position: fixed;top: 0px; z-index:500"
+      @on-submit="doSearch"
+      @on-cancel="clearSearch"
+      v-model="keywords"
+    />
+    <tab style="position: fixed;top: 44px; z-index:500;left:0;right:0" v-model="tabInx">
       <tab-item
         v-for="(i, inx) in tabs"
         :key="inx"
@@ -21,25 +26,14 @@
         />
       </div>
     </scroller>
-    <tabbar style="position: fixed">
-      <tabbar-item
-        v-for="(i, inx) in tabbars"
-        :key="inx"
-        :link="i.link"
-        :selected="inx === 0"
-      >
-        <img
-          slot="icon"
-          :src="i.src"
-        >
-        <span slot="label">{{i.label}}</span>
-      </tabbar-item>
-    </tabbar>
+    <nav-bottom />
   </div>
 </template>
 
 <script>
-import Item from "@/components/Item";
+import Item from '@/components/Item'
+import NavBottom from '@/components/NavBar'
+
 import {
   Box,
   XButton,
@@ -50,8 +44,8 @@ import {
   XSwitch,
   Tabbar,
   TabbarItem
-} from "vux";
-
+} from 'vux'
+import { PHOTOS } from '@/utils/const'
 export default {
   components: {
     Box,
@@ -63,35 +57,19 @@ export default {
     XSwitch,
     Tabbar,
     TabbarItem,
-    Item
+    Item,
+    NavBottom
   },
   data: _ => ({
-    tabbars: [
-      { src: require("../assets/vux_logo.png"), label: "首页", link: "/home" },
-      {
-        src: require("../assets/vux_logo.png"),
-        label: "套图",
-        link: "/photos"
-      },
-      {
-        src: require("../assets/vux_logo.png"),
-        label: "视屏",
-        link: "/videos"
-      },
-      {
-        src: require("../assets/vux_logo.png"),
-        label: "我",
-        link: "/user-center"
-      }
-    ],
-
     list: [],
     page: 1,
     isLoading: false,
     isEnd: false,
 
-    tabs: ["丽人", "秀色可惨", "小姐姐"],
-    tabInx: 0
+    tabs: ['丽人', '秀色可惨', '小姐姐'],
+    tabInx: 0,
+
+    keywords: ''
   }),
   methods: {
     getData (resetPage = false) {
@@ -99,52 +77,12 @@ export default {
       if (resetPage) {
         this.page = 1
       }
-      this.$vux.loading.show({ text: `加载(type:${this.tabInx}, page:${this.page})` })
+      this.$vux.loading.show({ text: `${this.tabInx}-${this.page}-${this.keywords}` })
       setTimeout(_ => {
-        let data = [
-          {
-            id: 1,
-            title: '花漾写真 [HuaYang] 2019.06.10 VOL.146 王雨纯',
-            src: 'http://file.idray.com/Upload/9900/5299/132051666191572568.jpg!wh400',
-            count: 0,
-            avatar: 'http://file.idray.com//Image/Brand/huayang.jpg!wh50',
-            name: '花漾show',
-            time: '2019-06-10',
-            userId: 12
-          },
-          {
-            id: 2,
-            title: '花漾写真 [HuaYang] 2019.06.10 VOL.146 王雨纯',
-            src: 'http://file.idray.com/Upload/9900/5299/132051666191572568.jpg!wh400',
-            count: 59,
-            avatar: 'http://file.idray.com//Image/Brand/huayang.jpg!wh50',
-            name: '花漾show',
-            time: '2019-06-10',
-            userId: 4
-          },
-          {
-            id: 3,
-            title: '花漾写真 [HuaYang] 2019.06.10 VOL.146 王雨纯',
-            src: 'http://file.idray.com/Upload/9900/5299/132051666191572568.jpg!wh400',
-            count: 0,
-            avatar: 'http://file.idray.com//Image/Brand/huayang.jpg!wh50',
-            name: '花漾show',
-            time: '2019-06-10',
-            userId: 1
-          },
-          {
-            id: 4,
-            title: '花漾写真 [HuaYang] 2019.06.10 VOL.146 王雨纯',
-            src: 'http://file.idray.com/Upload/9900/5299/132051666191572568.jpg!wh400',
-            count: 0,
-            avatar: 'http://file.idray.com//Image/Brand/huayang.jpg!wh50',
-            name: '花漾show',
-            time: '2019-06-10',
-            userId: 2
-          }
-        ]
+        let data = this.mockData()
         if (this.page === 1) {
           this.list = []
+          this.$refs.pv.reset({top: 0})
         }
         this.list.push(...data)
         setTimeout(_ => {
@@ -152,13 +90,35 @@ export default {
         }, 500)
         this.$vux.loading.hide()
         this.isLoading = false
-      }, 3000)
+      }, 1500)
     },
     handleMore () {
       if (!this.isLoading) {
         this.page++
         this.getData()
       }
+    },
+    doSearch () {
+      this.getData(true)
+    },
+    clearSearch () {
+      this.getData(true)
+    },
+    mockData () {
+      let arr = []
+      for (let i = 0; i < 4; i++) {
+        arr.push({
+          id: i + 1,
+          title: '花漾写真 [HuaYang] 2019.06.10 VOL.146 王雨纯',
+          src: PHOTOS[Math.floor(Math.random() * PHOTOS.length)],
+          count: 0,
+          avatar: 'http://file.idray.com//Image/Brand/huayang.jpg!wh50',
+          name: '花漾show',
+          time: '2019-06-10',
+          userId: 12
+        })
+      }
+      return arr
     }
   },
   watch: {
@@ -171,5 +131,5 @@ export default {
   mounted () {
     this.getData()
   }
-};
+}
 </script>

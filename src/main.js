@@ -5,7 +5,7 @@ import App from './App'
 import router from '@/router'
 import store from '@/store'
 
-import { Search, Previewer, Alert, XButton, LoadingPlugin, Scroller, ToastPlugin, ButtonTab, ButtonTabItem, Loading, XTextarea, Tab, TabItem } from 'vux'
+import { Search, Previewer, Alert, XButton, LoadingPlugin, Scroller, ToastPlugin, ButtonTab, ButtonTabItem, Loading, XTextarea, Tab, TabItem, Tabbar, TabbarItem } from 'vux'
 
 Vue.use(LoadingPlugin)
 Vue.use(ToastPlugin)
@@ -25,6 +25,8 @@ Vue.component('Loading', Loading)
 Vue.component('XTextarea', XTextarea)
 Vue.component('Tab', Tab)
 Vue.component('TabItem', TabItem)
+Vue.component('Tabbar', Tabbar)
+Vue.component('TabbarItem', TabbarItem)
 
 /* eslint-disable no-new */
 new Vue({

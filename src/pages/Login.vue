@@ -7,15 +7,15 @@
       <x-input
         title="手机号"
         placeholder="请输入手机号"
-        v-model="formBean.phone"
+        v-model="formBean.mobile"
         :show-clear="false"
         placeholder-align="left"
         :max="11"
         is-type="china-mobile"
         required
-        ref="phone"
+        ref="mobile"
       ></x-input>
-      <x-input
+      <!-- <x-input
         title="密码 "
         placeholder="请输入密码"
         v-model="formBean.password"
@@ -26,8 +26,20 @@
         required
         :is-type="v => ({valid: v.length >= 4, msg: '4-12密码'})"
         ref="password"
-      ></x-input>
-      <x-switch title="记住密码" v-model="rememberMe"></x-switch>
+      ></x-input> -->
+      <x-input
+        ref="code"
+        title="验证码"
+        placeholder="请输入验证码"
+        v-model="formBean.captcha"
+        :show-clear="false"
+        placeholder-align="left"
+        :max="4"
+        required
+        :is-type="v => ({valid:v.length == 4, msg: '输入正确的验证码'})">
+        <x-button slot="right" type="primary" mini @click.native="handleSendSms" :disabled="lockedForCode">{{lockedForCode ? `重新发送(${leftSecond})` : '获取验证码'}}</x-button>
+      </x-input>
+      <!-- <x-switch title="记住密码" v-model="rememberMe"></x-switch> -->
     </group>
 
     <box gap="100px 10px 50px">
@@ -46,7 +58,8 @@
 
 <script>
 import { Box, XButton, Group, XInput, Alert, AlertModule, XSwitch } from 'vux'
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
+import { sendSms, login } from '@/utils/api'
 
 export default {
   components: {
@@ -54,22 +67,54 @@ export default {
   },
   data: _ => ({
     formBean: {
-      phone: '',
-      password: ''
+      mobile: '',
+      captcha: ''
     },
-    rememberMe: true
+    rememberMe: true,
+
+    lockedForCode: false,
+    leftSecond: 60,
+    tId: ''
   }),
   methods: {
+    ...mapMutations(['setUser']),
     handleOk () {
-      if (!this.$refs.phone.valid) {
+      if (!this.$refs.mobile.valid) {
         this.$vux.toast.text('请输入正确的手机号码')
         return
       }
-      if (!this.$refs.password.valid) {
-        this.$vux.toast.text('请输入4-12位密码')
+      if (!this.$refs.code.valid) {
+        this.$vux.toast.text('请输入4位验证码')
         return
       }
-      console.log(this.formBean)
+      login(this.formBean).then(r => {
+        let user = r.data.userinfo
+        this.setUser(user)
+        this.$vux.toast.text(r.msg)
+        this.$router.push({
+          name: 'UserCenter'
+        })
+      })
+    },
+    handleSendSms () {
+      if (!this.$refs.mobile.valid) {
+        this.$vux.toast.text('请输入正确的手机号码')
+        return
+      }
+      let p = {
+        mobile: this.formBean.mobile,
+        event: 'mobilelogin'
+      }
+      sendSms(p).then(r => {
+        this.lockedForCode = true
+        this.tId = setInterval(_ => {
+          this.leftSecond--
+          if (this.leftSecond <= 0) {
+            clearInterval(this.tId)
+            this.lockedForCode = false
+          }
+        }, 1000)
+      })
     }
   },
   computed: {

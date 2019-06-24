@@ -1,23 +1,25 @@
 <template>
   <div class="item-wrap">
-    <div class="title" @click="toDetail">{{bean.title}}</div>
+    <div class="title" @click="toDetail">{{bean.name}}</div>
     <div class="img-wrap" @click="toDetail">
-      <img :src="bean.src" :style="`height: ${type === 1 ? '375px' : '200px'}`">
-      <div class="count">{{bean.count ? `${bean.count}金币` : '免费'}}</div>
+      <img :src="webHost+bean.thumb_image" :style="`height: ${type === 1 ? '375px' : '200px'}`">
+      <div class="count">{{bean.price ? `${bean.price}金币` : '免费'}}</div>
     </div>
     <div class="auth-info" @click="toAuth">
       <div class="ava-wrap">
-        <img :src="bean.avatar">
+        <img :src="webHost+bean.avatar">
       </div>
       <div class="name-time">
-        <div class="name">{{bean.name}}</div>
-        <div class="time">{{bean.time}}</div>
+        <div class="name">{{bean.nickname}}</div>
+        <div class="time">{{moment(bean.createtime*1000).format('YYYY-MM-DD')}}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { WEB_HOST } from '@/utils/const'
+import moment from 'moment'
 export default {
   props: {
     type: {
@@ -28,7 +30,10 @@ export default {
       type: Object
     }
   },
-  data: _ => ({}),
+  data: _ => ({
+    webHost: WEB_HOST,
+    moment
+  }),
   methods: {
     toDetail () {
       let path = ''

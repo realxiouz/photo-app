@@ -1,5 +1,5 @@
 <template>
-  <div style="background: #000;width:100vw;height:100vh">
+  <div style="background: #000;width:100vw;height:100vh" v-if="refresh">
     <previewer :list="list" ref="previewer" @on-index-change="handleChange" :options="options"></previewer>
 
     <div class="tip" v-if="!isBuy && list.length">
@@ -26,6 +26,8 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import { getPhotoDetail } from '@/utils/api'
+import { WEB_HOST } from '@/utils/const'
 
 export default {
   mounted () {
@@ -44,7 +46,8 @@ export default {
 
     totalCount: 50,
     isBuy: false,
-    coin: 100
+    coin: 100,
+    refresh: true
   }),
   methods: {
     ...mapMutations(['setRedirectPath']),
@@ -66,33 +69,37 @@ export default {
       this.$vux.loading.show({
         text: '加载中'
       })
-      setTimeout(_ => {
-        this.list = [
-          {
-            src: 'http://file.idray.com/Upload/9900/5233/132037832580658913.jpg',
-            w: 1200,
-            h: 1800
-          },
-          {
-            src: 'http://file.idray.com/Upload/9900/5233/132037832580658913.jpg',
-            w: 1200,
-            h: 1800
-          },
-          {
-            src: 'http://file.idray.com/Upload/9900/5233/132037832580658913.jpg',
-            w: 1200,
-            h: 1800
-          }
-        ]
+      getPhotoDetail({id: this.$route.params.id}).then(r => {
+        this.list = r.data.gallery_images.map(i => ({src: WEB_HOST + i}))
+        this.coin = r.data.price
+        this.totalCount = r.data.total
+        this.isBuy = this.coin === 0
         this.$nextTick(_ => {
           this.$refs.previewer.show(0)
         })
+      }).finally(_ => {
         this.$vux.loading.hide()
-      }, 3000)
+      })
+    },
+    resetData () {
+      // this.list = []
+      // this.isBuy = false
+      this.showBuyDialog = false
+      // this.$refs.previewer.close()
+      this.refresh = false
+      this.$nextTick(_ => {
+        this.refresh = true
+      })
     }
   },
   computed: {
     ...mapState(['user'])
+  },
+  activated () {
+    this.getData()
+  },
+  deactivated () {
+    this.resetData()
   }
 }
 </script>

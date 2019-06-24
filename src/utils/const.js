@@ -24,3 +24,5 @@ export const VIDEOS = [
   'http://file.idray.com/Upload/9930/2155/131712942919570572.jpg',
   'http://file.idray.com/Upload/9930/2151/131710385611432607.jpg'
 ]
+
+export const WEB_HOST = 'http://wcwadmin.51dreaming.com'

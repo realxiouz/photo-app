@@ -34,6 +34,8 @@ axios.interceptors.response.use(
     return Promise.reject(new Error('出错了'))
   },
   e => {
+    console.log(e)
+    return Promise.reject(e)
   }
 )
 

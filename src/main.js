@@ -40,6 +40,10 @@ Vue.component('Badge', Badge)
 Vue.component('Confirm', Confirm)
 Vue.component('Qrcode', Qrcode)
 
+let VConsole = require('vconsole')
+// eslint-disable-next-line
+let vConsole = new VConsole()
+
 /* eslint-disable no-new */
 new Vue({
   router,

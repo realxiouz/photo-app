@@ -89,6 +89,7 @@ export default {
       }
       login(this.formBean).then(r => {
         let user = r.data.userinfo
+        localStorage.setItem('token', user.token)
         this.setUser(user)
         this.$vux.toast.text(r.msg)
         this.$router.push({

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <keep-alive>
+    <keep-alive :exclude="exclude">
       <router-view></router-view>
     </keep-alive>
   </div>
@@ -8,7 +8,10 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  data: _ => ({
+    exclude: ['PayResult', 'PhotoDetail']
+  })
 }
 </script>
 

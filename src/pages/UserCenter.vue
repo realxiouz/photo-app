@@ -47,7 +47,7 @@ export default {
         {title: '我的关注', src: require('../assets/vux_logo.png'), link: ''}
       ],
       group3: [
-        {title: '红包任务', src: require('../assets/vux_logo.png'), link: ''}
+        {title: '红包任务', src: require('../assets/vux_logo.png'), link: '/reward'}
       ]
     }
   },

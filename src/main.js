@@ -5,10 +5,11 @@ import App from './App'
 import router from '@/router'
 import store from '@/store'
 
-import { Search, Previewer, Alert, XButton, LoadingPlugin, Scroller, ToastPlugin, ButtonTab, ButtonTabItem, Loading, XTextarea, Tab, TabItem, Tabbar, TabbarItem, Card, Divider, Checker, CheckerItem } from 'vux'
+import { Search, Previewer, Alert, XButton, LoadingPlugin, Scroller, ToastPlugin, ButtonTab, ButtonTabItem, Loading, XTextarea, Tab, TabItem, Tabbar, TabbarItem, Card, Divider, Checker, CheckerItem, Msg, Box, Group, Cell, Badge, AlertPlugin, Confirm, Qrcode } from 'vux'
 
 Vue.use(LoadingPlugin)
 Vue.use(ToastPlugin)
+Vue.use(AlertPlugin)
 
 FastClick.attach(document.body)
 
@@ -31,6 +32,13 @@ Vue.component('Card', Card)
 Vue.component('Divider', Divider)
 Vue.component('Checker', Checker)
 Vue.component('CheckerItem', CheckerItem)
+Vue.component('Msg', Msg)
+Vue.component('Box', Box)
+Vue.component('Group', Group)
+Vue.component('Cell', Cell)
+Vue.component('Badge', Badge)
+Vue.component('Confirm', Confirm)
+Vue.component('Qrcode', Qrcode)
 
 /* eslint-disable no-new */
 new Vue({

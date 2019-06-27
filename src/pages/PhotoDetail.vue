@@ -30,6 +30,7 @@ import { getPhotoDetail } from '@/utils/api'
 import { WEB_HOST } from '@/utils/const'
 
 export default {
+  name: 'PhotoDetail',
   mounted () {
     this.getData()
   },

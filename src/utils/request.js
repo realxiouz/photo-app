@@ -1,7 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 import Vue from 'vue'
-import store from '@/store'
+// import store from '@/store'
 
 const request = axios
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8'
@@ -13,8 +13,9 @@ axios.interceptors.request.use(
     if (r.method === 'post') {
       r.data = qs.stringify(r.data)
     }
-    if (store.state.user) {
-      r.headers['token'] = store.state.user.token
+    let token = localStorage.getItem('token')
+    if (token) {
+      r.headers['token'] = token
     }
     return r
   },
@@ -34,7 +35,12 @@ axios.interceptors.response.use(
     return Promise.reject(new Error('出错了'))
   },
   e => {
-    console.log(e)
+    if (e.response) {
+      if (e.response.status === 401) {
+        Vue.$vux.toast.text('请首先登录')
+      }
+      return Promise.reject(new Error(e.response))
+    }
     return Promise.reject(e)
   }
 )

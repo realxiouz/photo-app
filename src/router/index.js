@@ -104,6 +104,21 @@ const router = new Router({
       component: _ => import('@/pages/VideoDetail'),
       meta: {
       }
+    },
+    {
+      path: '/pay-result/:id',
+      name: 'PayResult',
+      component: _ => import('@/pages/PayResult'),
+      meta: {
+      }
+    },
+    {
+      path: '/reward',
+      name: 'Reward',
+      component: _ => import('@/pages/Reward'),
+      meta: {
+        title: '红包'
+      }
     }
   ]
 })

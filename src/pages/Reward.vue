@@ -52,6 +52,7 @@ export default {
       this.qrCodeDialog = true
     },
     saveQrCode () {
+      // android chrome bug
       let href = this.$refs.qrcode.$refs.canvas.toDataURL('image/png')
       let aLink = document.createElement('a')
       aLink.setAttribute('href', href)

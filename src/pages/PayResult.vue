@@ -12,7 +12,7 @@ export default {
     checkPayResult({id}).then(r => {
       this.title = '支付成功'
       this.icon = 'success'
-      this.description = r.data.message
+      this.description = r.msg
     }).catch(e => {
       this.title = '支付失败'
       this.icon = 'warn'

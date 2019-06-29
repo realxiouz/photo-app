@@ -46,8 +46,8 @@
       <x-button type="primary" @click.native="handleOk">确定</x-button>
     </box>
     <div style="margin-bottom:50px;text-align:center">
-      <router-link to="/register">注册账号</router-link>
-      <router-link to="/reset-password">找回密码</router-link>
+      <!-- <router-link to="/register">注册账号</router-link>
+      <router-link to="/reset-password">找回密码</router-link> -->
     </div>
     <div>
       <div style="color: #999999;text-align: center;font-size: 14px">{{info.webName}}</div>
@@ -107,6 +107,7 @@ export default {
         event: 'mobilelogin'
       }
       sendSms(p).then(r => {
+        console.log('sms send success')
         this.lockedForCode = true
         this.tId = setInterval(_ => {
           this.leftSecond--

@@ -10,7 +10,7 @@
 export default {
   name: 'app',
   data: _ => ({
-    exclude: ['PayResult', 'PhotoDetail']
+    exclude: ['PayResult', 'PhotoDetail', 'Rechange']
   })
 }
 </script>

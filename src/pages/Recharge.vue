@@ -44,6 +44,7 @@ import { Checklist, Box, XButton } from 'vux'
 import { getPayTypes, doOrder } from '@/utils/api'
 
 export default {
+  name: 'Rechange',
   components: {
     Checklist,
     Box,
@@ -91,6 +92,7 @@ export default {
         type: this.selType
       }
       doOrder(p).then(r => {
+        // console.log(r.data)
         this.payForm = r.data.payInfo
         this.payForm.return_url = `${window.location.protocol}//${window.location.host}/#/pay-result/${this.payForm.orderid}`
         this.$nextTick(_ => {

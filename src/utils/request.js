@@ -4,18 +4,21 @@ import Vue from 'vue'
 // import store from '@/store'
 
 const request = axios
-axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8'
+// axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8'
 axios.defaults.headers['X-Requested-With'] = 'X-Requested-With'
 axios.defaults.baseURL = '/api'
 
 axios.interceptors.request.use(
   r => {
-    if (r.method === 'post') {
+    if (r.method === 'post' && r.url !== '/common/upload') {
       r.data = qs.stringify(r.data)
     }
     let token = localStorage.getItem('token')
     if (token) {
       r.headers['token'] = token
+    }
+    if (r.url === '/common/upload') {
+      r.headers['Content-Type'] = 'application/x-www-form-urlencoded'
     }
     return r
   },

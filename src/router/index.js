@@ -119,6 +119,22 @@ const router = new Router({
       meta: {
         title: '红包'
       }
+    },
+    {
+      path: '/test',
+      name: 'Test',
+      component: _ => import('@/pages/Test'),
+      meta: {
+        title: '测试'
+      }
+    },
+    {
+      path: '/photo-post',
+      name: 'PhotoPost',
+      component: _ => import('@/pages/PhotoPost'),
+      meta: {
+        title: '发布图集'
+      }
     }
   ]
 })

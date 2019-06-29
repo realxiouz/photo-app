@@ -12,3 +12,6 @@ export const getPhotoDetail = p => r.get('/index/detail', {params: p})
 export const getPayTypes = _ => r.get('/score/paylist')
 export const doOrder = p => r.post('/score/order', p)
 export const checkPayResult = p => r.post('/score/querypay', p)
+
+// upload file
+export const uploadFile = p => r.post('/common/upload', p)

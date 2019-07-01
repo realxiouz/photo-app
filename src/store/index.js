@@ -9,7 +9,7 @@ export default new Vuex.Store({
       webName: '网赚网',
       copyRight: 'Copyright © 2019 fenun.cn'
     },
-    user: null,
+    user: {},
     redirectPath: ''
   },
   mutations: {

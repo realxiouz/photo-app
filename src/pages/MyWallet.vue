@@ -5,6 +5,7 @@
     </div>
     <box gap="10px 10px">
       <x-button type="primary" link="/recharge">充值</x-button>
+      <x-button type="default" link="/order-list">充值记录</x-button>
     </box>
   </div>
 </template>

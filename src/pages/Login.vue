@@ -87,6 +87,9 @@ export default {
         this.$vux.toast.text('请输入4位验证码')
         return
       }
+      if (this.$route.query.uid) {
+        this.formBean.uid = this.$route.query.uid
+      }
       login(this.formBean).then(r => {
         let user = r.data.userinfo
         localStorage.setItem('token', user.token)

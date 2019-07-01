@@ -5,7 +5,7 @@ import App from './App'
 import router from '@/router'
 import store from '@/store'
 
-import { Search, Previewer, Alert, XButton, LoadingPlugin, Scroller, ToastPlugin, ButtonTab, ButtonTabItem, Loading, XTextarea, Tab, TabItem, Tabbar, TabbarItem, Card, Divider, Checker, CheckerItem, Msg, Box, Group, Cell, Badge, AlertPlugin, Confirm, Qrcode, XInput, XNumber, Range } from 'vux'
+import { Search, Previewer, Alert, XButton, LoadingPlugin, Scroller, ToastPlugin, ButtonTab, ButtonTabItem, Loading, XTextarea, Tab, TabItem, Tabbar, TabbarItem, Card, Divider, Checker, CheckerItem, Msg, Box, Group, Cell, Badge, AlertPlugin, Confirm, Qrcode, XInput, XNumber, Range, XHeader, Icon } from 'vux'
 
 Vue.use(LoadingPlugin)
 Vue.use(ToastPlugin)
@@ -42,6 +42,8 @@ Vue.component('Qrcode', Qrcode)
 Vue.component('XInput', XInput)
 Vue.component('XNumber', XNumber)
 Vue.component('Range', Range)
+Vue.component('XHeader', XHeader)
+Vue.component('Icon', Icon)
 
 let VConsole = require('vconsole')
 // eslint-disable-next-line

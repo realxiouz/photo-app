@@ -27,13 +27,15 @@
         confirm-text="保存二维码"
         :show-cancel-button="false"
       >
-        <qrcode value="https://vux.li?x-page=demo_qrcode" type="canvas" ref="qrcode"/>
+        <qrcode :value="recommendUrl" type="canvas" ref="qrcode"/>
       </confirm>
     <!-- </div> -->
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   methods: {
     handleFollow () {
@@ -54,6 +56,7 @@ export default {
     saveQrCode () {
       // android chrome bug
       let href = this.$refs.qrcode.$refs.canvas.toDataURL('image/png')
+      console.log('href', href)
       let aLink = document.createElement('a')
       aLink.setAttribute('href', href)
       aLink.setAttribute('download', '二维码.png')
@@ -62,6 +65,12 @@ export default {
   },
   data: _ => ({
     qrCodeDialog: false
-  })
+  }),
+  computed: {
+    ...mapState(['user']),
+    recommendUrl () {
+      return `${window.location.protocol}//${window.location.host}/#/login?uid=${this.user.id}`
+    }
+  }
 }
 </script>

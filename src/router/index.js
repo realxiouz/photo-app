@@ -135,13 +135,29 @@ const router = new Router({
       meta: {
         title: '发布图集'
       }
+    },
+    {
+      path: '/order-list',
+      name: 'OrderList',
+      component: _ => import('@/pages/OrderList'),
+      meta: {
+        title: '我的订单'
+      }
+    },
+    {
+      path: '/edit-profile',
+      name: 'EditProfile',
+      component: _ => import('@/pages/EditProfile'),
+      meta: {
+        title: '资料编辑'
+      }
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title ? `${to.meta.title}_${store.state.info.webName}` : store.state.info.webName
-  if (to.path === '/user-center' && !store.state.user) {
+  if (to.path === '/user-center' && !store.state.user.token) {
     next('/login')
   }
   next()

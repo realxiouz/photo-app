@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="top">
+    <div class="top" @click="$router.push({name: 'EditProfile'})">
       <div class="ava-wrap">
-        <img :src="user.avatar">
+        <img :src="user.avatar&&user.avatar.startsWith('data:image')?user.avatar:webHost+user.avatar">
       </div>
-      <div class="name">{{user.mobile}}</div>
+      <div class="name">{{user.nickname||user.mobile}}</div>
     </div>
     <group>
       <cell :title="i.title" :is-link="!!i.link" v-for="(i, inx) in group1" :key="inx" :link="i.link">
@@ -17,10 +17,13 @@
       </cell>
     </group>
     <group>
-      <cell :title="i.title" :is-link="!!i.link" v-for="(i, inx) in group3" :key="inx" :link="i.link">
+      <cell :title="i.title" :is-link="!!i.link" v-for="(i, inx) in group4" :key="inx" :link="i.link">
         <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="i.src"/>
       </cell>
     </group>
+    <box gap="20px 10px">
+      <x-button @click.native="handleLogout" type="warn">退出登录</x-button>
+    </box>
     <nav-bottom />
   </div>
 </template>
@@ -28,7 +31,8 @@
 <script>
 import { Group, Cell } from 'vux'
 import { mapState } from 'vuex'
-// import { login } from '@/utils/api'
+import { WEB_HOST } from '@/utils/const'
+import { logout } from '@/utils/api'
 import NavBottom from '@/components/NavBar'
 
 export default {
@@ -44,17 +48,30 @@ export default {
         {title: '我的订单', src: require('../assets/vux_logo.png'), link: ''}
       ],
       group2: [
-        {title: '我的关注', src: require('../assets/vux_logo.png'), link: ''}
-      ],
-      group3: [
+        {title: '我的关注', src: require('../assets/vux_logo.png'), link: ''},
         {title: '红包任务', src: require('../assets/vux_logo.png'), link: '/reward'}
-      ]
+      ],
+      group4: [
+        {title: '发布图集', src: require('../assets/photo-active.png'), link: '/photo-post'},
+        {title: '发布视频', src: require('../assets/video-active.png'), link: ''}
+      ],
+      webHost: WEB_HOST
     }
   },
   computed: {
     ...mapState(['user'])
   },
   mounted () {
+  },
+  methods: {
+    handleLogout () {
+      logout().then(r => {}).finally(_ => {
+        sessionStorage.removeItem('token')
+        this.setuser({})
+        this.$vux.toast.text('注销成功')
+        this.$router.push({name: 'Login'})
+      })
+    }
   }
 }
 </script>

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
+import { validateToken } from '@/utils/const'
 
 Vue.use(Router)
 
@@ -11,7 +12,8 @@ const router = new Router({
       name: 'UserCenter',
       component: _ => import('@/pages/UserCenter'),
       meta: {
-        title: '用户中心'
+        title: '用户中心',
+        auth: true
       }
     },
     {
@@ -157,7 +159,11 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title ? `${to.meta.title}_${store.state.info.webName}` : store.state.info.webName
-  if (to.path === '/user-center' && !store.state.user.token) {
+  // let token = localStorage.token
+  // if (to.path === '/user-center' && !token) {
+  //   next('/login')
+  // }
+  if (to.meta.auth && !validateToken(new Date().getTime())) {
     next('/login')
   }
   next()

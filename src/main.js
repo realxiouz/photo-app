@@ -45,9 +45,11 @@ Vue.component('Range', Range)
 Vue.component('XHeader', XHeader)
 Vue.component('Icon', Icon)
 
-let VConsole = require('vconsole')
-// eslint-disable-next-line
-let vConsole = new VConsole()
+if (process.env.NODE_ENV === 'development') {
+  let VConsole = require('vconsole')
+  // eslint-disable-next-line
+  let vConsole = new VConsole()
+}
 
 /* eslint-disable no-new */
 new Vue({

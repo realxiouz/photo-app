@@ -17,8 +17,13 @@
       </cell>
     </group>
     <group>
-      <cell :title="i.title" :is-link="!!i.link" v-for="(i, inx) in group4" :key="inx" :link="i.link">
-        <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="i.src"/>
+      <template v-if="user.is_member === 1">
+        <cell :title="i.title" :is-link="!!i.link" v-for="(i, inx) in group4" :key="inx" :link="i.link">
+          <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="i.src"/>
+        </cell>
+      </template>
+      <cell v-if="user.is_member === 0" title="注册会员">
+        <img slot="icon" width="20" style="display:block;margin-right:5px;" src="../assets/me-active.png"/>
       </cell>
     </group>
     <box gap="20px 10px">
@@ -30,7 +35,7 @@
 
 <script>
 import { Group, Cell } from 'vux'
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import { WEB_HOST } from '@/utils/const'
 import { logout } from '@/utils/api'
 import NavBottom from '@/components/NavBar'
@@ -64,10 +69,11 @@ export default {
   mounted () {
   },
   methods: {
+    ...mapMutations(['setUser']),
     handleLogout () {
       logout().then(r => {}).finally(_ => {
         sessionStorage.removeItem('token')
-        this.setuser({})
+        this.setUser({})
         this.$vux.toast.text('注销成功')
         this.$router.push({name: 'Login'})
       })

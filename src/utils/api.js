@@ -1,7 +1,11 @@
 import r from './request'
 
-export const login = p => r.post('user/mobilelogin', p)
-export const sendSms = p => r.post('sms/send', p)
+export const login = p => r.post('/user/mobilelogin', p)
+export const sendSms = p => r.post('/sms/send', p)
+export const checkToken = _ => r.get('/token/check')
+export const getInfoByToken = _ => r.get('/user')
+
+export const getQrcode = _ => r.get('/promotion/qrcode')
 
 // home-page
 export const allPhotoTypes = _ => r.get('/index/category')

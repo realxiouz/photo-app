@@ -2,6 +2,7 @@ import axios from 'axios'
 import qs from 'qs'
 import Vue from 'vue'
 // import store from '@/store'
+import router from '@/router'
 
 const request = axios
 // axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8'
@@ -40,7 +41,9 @@ axios.interceptors.response.use(
   e => {
     if (e.response) {
       if (e.response.status === 401) {
-        Vue.$vux.toast.text('请首先登录')
+        // Vue.$vux.toast.text('请首先登录')
+        console.warn('token失效')
+        router.push({path: '/login'})
       }
       return Promise.reject(new Error(e.response))
     }

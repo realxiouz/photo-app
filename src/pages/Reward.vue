@@ -27,7 +27,8 @@
         confirm-text="保存二维码"
         :show-cancel-button="false"
       >
-        <qrcode :value="recommendUrl" type="canvas" ref="qrcode"/>
+        <!-- <qrcode :value="recommendUrl" type="canvas" ref="qrcode"/> -->
+        <img style="width:160px;height:160px" :src="qrCodeSrc" />
       </confirm>
     <!-- </div> -->
   </div>
@@ -35,6 +36,8 @@
 
 <script>
 import { mapState } from 'vuex'
+import { getQrcode } from '@/utils/api'
+import { WEB_HOST } from '@/utils/const'
 
 export default {
   methods: {
@@ -55,22 +58,36 @@ export default {
     },
     saveQrCode () {
       // android chrome bug
-      let href = this.$refs.qrcode.$refs.canvas.toDataURL('image/png')
-      console.log('href', href)
-      let aLink = document.createElement('a')
-      aLink.setAttribute('href', href)
-      aLink.setAttribute('download', '二维码.png')
-      aLink.click()
+      // let href = this.$refs.qrcode.$refs.canvas.toDataURL('image/png')
+      // let aLink = document.createElement('a')
+      // aLink.setAttribute('href', href)
+      // aLink.setAttribute('download', '二维码.png')
+      // aLink.click()
+
+      let a = document.createElement('a')
+      a.setAttribute('href', this.qrCodeSrc)
+      a.setAttribute('download', 'qrcode.png')
+      a.click()
+    },
+    qrcode () {
+      getQrcode().then(r => {
+        this.qrCodeSrc = WEB_HOST + r.data
+      })
     }
   },
   data: _ => ({
-    qrCodeDialog: false
+    qrCodeDialog: false,
+    qrCodeSrc: '',
+    webHost: WEB_HOST
   }),
   computed: {
     ...mapState(['user']),
     recommendUrl () {
       return `${window.location.protocol}//${window.location.host}/#/login?uid=${this.user.id}`
     }
+  },
+  mounted () {
+    this.qrcode()
   }
 }
 </script>

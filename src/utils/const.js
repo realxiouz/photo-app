@@ -28,3 +28,9 @@ export const VIDEOS = [
 export const WEB_HOST = 'http://wcwadmin.51dreaming.com'
 // 图片上传限制 单位:Mb
 export const MAX_SIZE_FOR_PHOTO = 8
+
+export const validateToken = t => {
+  let token = localStorage.token
+  let expires = localStorage.expires ? parseInt(localStorage.expires) : 0
+  return token && expires && t < expires
+}

@@ -53,9 +53,7 @@ export default {
       }
       this.$vux.loading.show({text: `加载中...`})
       let p = {
-        categoryId: this.selTabId,
-        page: this.page,
-        keyword: this.keyword
+        page: this.page
       }
       orderList(p).then(r => {
         let data = r.data

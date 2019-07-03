@@ -22,8 +22,8 @@
         <img :src="avatarSrc">
       </div>
      </cell>
-     <x-input title="签名 " v-model="formBean.bio" ref="bio" required :max="20"
-      placeholder="输入签名,最多20字符"></x-input>
+     <!-- <x-input title="签名 " v-model="formBean.bio" ref="bio" required :max="20"
+      placeholder="输入签名,最多20字符"></x-input> -->
    </group>
    <box gap="100px 10px 0">
      <x-button type="primary" @click.native="handleOk">保存</x-button>
@@ -49,7 +49,7 @@ export default {
         username: data.username,
         nickname: data.nickname,
         avatar: data.avatar,
-        bio: data.bio
+        bio: '这个人很懒,什么都没留下'
       }
     }
   },
@@ -64,14 +64,17 @@ export default {
         this.$vux.toast.text('请输入昵称')
         return
       }
-      if (!this.$refs.bio.valid) {
-        this.$vux.toast.text('请输入签名')
-        return
-      }
+      // if (!this.$refs.bio.valid) {
+      //   this.$vux.toast.text('请输入签名')
+      //   return
+      // }
 
       editProfile(this.formBean).then(r => {
         this.setUser(Object.assign({}, this.user, this.formBean))
         this.$vux.toast.text('资料修改成功!')
+        this.$nextTick(_ => {
+          this.$router.push({name: 'UserCenter'})
+        })
       })
     },
     change () {

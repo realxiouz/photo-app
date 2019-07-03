@@ -93,6 +93,7 @@ export default {
       login(this.formBean).then(r => {
         let user = r.data.userinfo
         localStorage.setItem('token', user.token)
+        localStorage.setItem('expires', new Date().getTime() + user.expires_in * 1000)
         this.setUser(user)
         this.$vux.toast.text(r.msg)
         this.$router.push({

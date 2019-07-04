@@ -4,20 +4,21 @@
       style="position: fixed;top: 0px; z-index:500"
       @on-submit="doSearch"
       @on-cancel="clearSearch"
-      v-model="keywords"
+      v-model="keyword"
     />
-    <!-- <tab style="position: fixed;top: 44px; z-index:500;left:0;right:0" v-model="tabInx">
+    <tab style="position: fixed;top: 44px; z-index:500;left:0;right:0" v-model="tabInx">
       <tab-item
         v-for="(i, inx) in tabs"
         :key="inx"
-      >{{i}}</tab-item>
-    </tab> -->
+        @on-item-click="handleItemSelect(i)"
+      >{{i.name}}</tab-item>
+    </tab>
     <scroller
       lock-x
       @on-scroll-bottom="handleMore"
       ref="pv"
     >
-      <div style="padding: 44px 0 53px 0">
+      <div style="padding: 88px 0 53px 0">
         <item
           v-for="(i, inx) in list"
           :key="inx"
@@ -33,6 +34,7 @@
 <script>
 import Item from '@/components/Item'
 import NavBottom from '@/components/NavBar'
+
 import {
   Box,
   XButton,
@@ -44,7 +46,8 @@ import {
   Tabbar,
   TabbarItem
 } from 'vux'
-import { PHOTOS } from '@/utils/const'
+import { allPhotoTypes, getPhotosByType } from '@/utils/api'
+
 export default {
   components: {
     Box,
@@ -65,34 +68,48 @@ export default {
     isLoading: false,
     isEnd: false,
 
-    tabs: ['丽人', '秀色可惨', '小姐姐'],
+    tabs: [],
     tabInx: 0,
+    selTabId: '',
 
-    keywords: ''
+    keyword: ''
   }),
   methods: {
     getData (resetPage = false) {
+      if (this.isLoading) {
+        return
+      }
       this.isLoading = true
       if (resetPage) {
         this.page = 1
+        this.isEnd = false
       }
-      this.$vux.loading.show({ text: `${this.tabInx}-${this.page}-${this.keywords}` })
-      setTimeout(_ => {
-        let data = this.mockData()
+      this.$vux.loading.show({text: `加载中...`})
+      let p = {
+        categoryId: this.selTabId,
+        page: this.page,
+        keyword: this.keyword
+      }
+      getPhotosByType(p).then(r => {
+        let data = r.data
         if (this.page === 1) {
           this.list = []
           this.$refs.pv.reset({top: 0})
         }
         this.list.push(...data)
-        setTimeout(_ => {
+        if (!data.length) {
+          this.isEnd = true
+        }
+        this.$nextTick(_ => {
           this.$refs.pv.reset()
-        }, 500)
+        })
+      }).finally(_ => {
         this.$vux.loading.hide()
         this.isLoading = false
-      }, 1500)
+      })
     },
     handleMore () {
-      if (!this.isLoading) {
+      if (!this.isLoading && !this.isEnd) {
         this.page++
         this.getData()
       }
@@ -101,35 +118,27 @@ export default {
       this.getData(true)
     },
     clearSearch () {
+      this.keyword = ''
       this.getData(true)
     },
-    mockData () {
-      let arr = []
-      for (let i = 0; i < 4; i++) {
-        arr.push({
-          id: i + 1,
-          title: '花漾写真 [HuaYang] 2019.06.10 VOL.146 王雨纯',
-          src: PHOTOS[Math.floor(Math.random() * PHOTOS.length)],
-          count: 0,
-          avatar: 'http://file.idray.com//Image/Brand/huayang.jpg!wh50',
-          name: '花漾show',
-          time: '2019-06-10',
-          userId: 12
-        })
-      }
-      return arr
+    handleItemSelect (i) {
+      this.selTabId = i.id
     }
   },
   watch: {
-    tabInx: {
-      handler (val) {
+    selTabId (val) {
+      if (val) {
         this.getData(true)
       }
     }
   },
   mounted () {
-    this.getData()
+    allPhotoTypes().then(r => {
+      this.tabs = r.data
+      if (this.tabs.length) {
+        this.selTabId = this.tabs[0].id
+      }
+    })
   }
 }
 </script>
-

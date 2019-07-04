@@ -1,34 +1,21 @@
 <template>
   <div>
-    <div class="top" @click="$router.push({name: 'EditProfile'})">
-      <div class="ava-wrap">
-        <img :src="user.avatar&&user.avatar.startsWith('data:image')?user.avatar:webHost+user.avatar">
+    <div style="padding: 0 0 53px">
+      <div class="top" @click="$router.push({name: 'EditProfile'})">
+        <div class="ava-wrap">
+          <img :src="user.avatar&&user.avatar.startsWith('data:image')?user.avatar:webHost+user.avatar">
+        </div>
+        <div class="name">{{user.nickname||user.mobile}}</div>
       </div>
-      <div class="name">{{user.nickname||user.mobile}}</div>
-    </div>
-    <group>
-      <cell :title="i.title" :is-link="!!i.link" v-for="(i, inx) in group1" :key="inx" :link="i.link">
-        <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="i.src"/>
-      </cell>
-    </group>
-    <group>
-      <cell :title="i.title" :is-link="!!i.link" v-for="(i, inx) in group2" :key="inx" :link="i.link">
-        <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="i.src"/>
-      </cell>
-    </group>
-    <group>
-      <template v-if="user.is_member === 1">
-        <cell :title="i.title" :is-link="!!i.link" v-for="(i, inx) in group4" :key="inx" :link="i.link">
+      <group v-for="(item, index) in groups" :key="`group${index}`">
+        <cell :title="i.title" :is-link="!!i.link" v-for="(i, inx) in item" :key="`group${index}cell${inx}`" :link="i.link">
           <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="i.src"/>
         </cell>
-      </template>
-      <cell v-if="user.is_member === 0" title="注册会员">
-        <img slot="icon" width="20" style="display:block;margin-right:5px;" src="../assets/me-active.png"/>
-      </cell>
-    </group>
-    <box gap="20px 10px">
-      <x-button @click.native="handleLogout" type="warn">退出登录</x-button>
-    </box>
+      </group>
+      <box gap="20px 10px">
+        <x-button @click.native="handleLogout" type="warn">退出登录</x-button>
+      </box>
+    </div>
     <nav-bottom />
   </div>
 </template>
@@ -48,19 +35,22 @@ export default {
   },
   data () {
     return {
-      group1: [
-        {title: '我的钱包', src: require('../assets/vux_logo.png'), link: '/my-wallet'},
-        {title: '我的订单', src: require('../assets/vux_logo.png'), link: ''}
-      ],
-      group2: [
-        {title: '我的关注', src: require('../assets/vux_logo.png'), link: ''},
-        {title: '红包任务', src: require('../assets/vux_logo.png'), link: '/reward'}
-      ],
-      group4: [
-        {title: '发布图集', src: require('../assets/photo-active.png'), link: '/photo-post'},
-        {title: '发布视频', src: require('../assets/video-active.png'), link: ''}
-      ],
-      webHost: WEB_HOST
+      webHost: WEB_HOST,
+      groups: [
+        [
+          {title: '我的钱包', src: require('../assets/vux_logo.png'), link: '/my-wallet'},
+          {title: '我的二维码', src: require('../assets/vux_logo.png'), link: ''},
+          {title: '我的订单', src: require('../assets/vux_logo.png'), link: '/my-wallet'},
+          {title: '钱包任务', src: require('../assets/vux_logo.png'), link: '/my-wallet'},
+          {title: '我要赚钱', src: require('../assets/vux_logo.png'), link: '/my-wallet'},
+          {title: '成为合伙人', src: require('../assets/vux_logo.png'), link: '/my-wallet'},
+          {title: '加盟&代理', src: require('../assets/vux_logo.png'), link: '/my-wallet'},
+          {title: '我要约拍', src: require('../assets/vux_logo.png'), link: '/my-wallet'},
+          {title: '商务合作', src: require('../assets/vux_logo.png'), link: '/my-wallet'},
+          {title: '加油卡充值', src: require('../assets/vux_logo.png'), link: '/my-wallet'},
+          {title: '话费充值', src: require('../assets/vux_logo.png'), link: '/my-wallet'}
+        ]
+      ]
     }
   },
   computed: {
@@ -83,13 +73,13 @@ export default {
 </script>
 
 <style lang="less">
-.vux-demo {
-  text-align: center;
-}
-.logo {
-  width: 100px;
-  height: 100px
-}
+// .vux-demo {
+//   text-align: center;
+// }
+// .logo {
+//   width: 100px;
+//   height: 100px
+// }
 </style>
 
 <style lang="less" scoped>

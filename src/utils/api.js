@@ -7,10 +7,14 @@ export const getInfoByToken = _ => r.get('/user')
 
 export const getQrcode = _ => r.get('/promotion/qrcode')
 
-// home-page
+// photo
 export const allPhotoTypes = _ => r.get('/index/category')
 export const getPhotosByType = p => r.get('/index/gallery', {params: p})
 export const getPhotoDetail = p => r.get('/index/detail', {params: p})
+
+// video
+export const allVideoTypes = _ => r.get('/video/category')
+export const getVideoByType = p => r.get('/video', {params: p})
 
 // recharge-page
 export const getPayTypes = _ => r.get('/score/paylist')

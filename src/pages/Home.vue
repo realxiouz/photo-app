@@ -19,12 +19,7 @@
       ref="pv"
     >
       <div style="padding: 88px 0 53px 0">
-        <item
-          v-for="(i, inx) in list"
-          :key="inx"
-          :bean="i"
-          :type="1"
-        />
+        home
       </div>
     </scroller>
     <nav-bottom />

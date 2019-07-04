@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="height:60vw">
-      <video src="http://file.idray.com/Upload/9930/2297/131766521194734612.mp4" ref="v" class="video" controls autoplay @ended="handleEnd"></video>
+      <video :src="src" ref="v" class="video" controls autoplay @ended="handleEnd"></video>
     </div>
     <div class="buy-tip" v-if="!isBuy">
       <span style="color:#999;font-size:16px">免费观看 30 秒,打赏后观看完整版</span>
@@ -12,16 +12,19 @@
 
     <group>
       <x-textarea :max="200" placeholder="购买后可评价资源" v-model="post"></x-textarea>
+      <cell>
+        <x-button mini type="primary" @click.native="doPost">发送</x-button>
+      </cell>
     </group>
 
     <group>
       <card :header="{title: '最新评论'}" :footer="{title: '查看更多'}">
         <div slot="content">
           <div style="display: flex;padding:15px;border-bottom: 1px solid #ddd;" v-for="(i, inx) in comments" :key="inx">
-            <img :src="i.avatar" alt="" style="width:60px;height:60px;margin-right:10px">
+            <img :src="webHost+i.user.avatar" alt="" style="width:60px;height:60px;margin-right:10px">
             <div>
-              <div style="font-size:17px;font-weight:400">{{i.name}}</div>
-              <div style="font-size:13px;color: #999">{{i.comment}}</div>
+              <div style="font-size:17px;font-weight:400">{{i.user.nickname}}</div>
+              <div style="font-size:13px;color: #999">{{i.content}}</div>
             </div>
           </div>
         </div>
@@ -40,32 +43,19 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import { getVideoDetail, buyVideo, checkBuyVideo, commentList, postComment } from '@/utils/api'
+import { WEB_HOST } from '@/utils/const'
 
 export default {
+  name: 'VideoDetail',
   data: _ => ({
     isBuy: false,
     coin: 100,
-
     showBuyDialog: false,
     post: '',
-
-    comments: [
-      {
-        name: '匿名用户',
-        avatar: 'http://thirdwx.qlogo.cn/mmopen/MUB8P9Xqe5pib8snMfX0Bd17DRjCLp6yTcjQpaM9ic6ribX8bVQnoJ8xNxOPsWJ9k1B6rJabAI7IfwNk7wlcWwcnuU8I0XAVGRt/132',
-        comment: '楼主辛苦了'
-      },
-      {
-        name: '匿名用户',
-        avatar: 'http://thirdwx.qlogo.cn/mmopen/MUB8P9Xqe5pib8snMfX0Bd17DRjCLp6yTcjQpaM9ic6ribX8bVQnoJ8xNxOPsWJ9k1B6rJabAI7IfwNk7wlcWwcnuU8I0XAVGRt/132',
-        comment: '楼主辛苦了'
-      },
-      {
-        name: '匿名用户',
-        avatar: 'http://thirdwx.qlogo.cn/mmopen/MUB8P9Xqe5pib8snMfX0Bd17DRjCLp6yTcjQpaM9ic6ribX8bVQnoJ8xNxOPsWJ9k1B6rJabAI7IfwNk7wlcWwcnuU8I0XAVGRt/132',
-        comment: '楼主辛苦了'
-      }
-    ]
+    comments: [],
+    src: '',
+    webHost: WEB_HOST
   }),
   methods: {
     ...mapMutations(['setRedirectPath']),
@@ -74,15 +64,45 @@ export default {
         this.setRedirectPath(this.$route.path)
         this.$router.push({ path: '/login' })
       }
+      buyVideo({id: this.$route.params.id}).then(r => {
+        this.isBuy = true
+      }).catch(e => {
+        // todo
+      })
     },
     handleEnd () {
       if (!this.isBuy) {
         this.showBuyDialog = true
       }
+    },
+    doPost () {
+      postComment({
+        video_id: this.$route.params.id,
+        content: this.post
+      }).then(r => {
+
+      })
     }
   },
   computed: {
     ...mapState(['user'])
+  },
+  mounted () {
+    checkBuyVideo({id: this.$route.params.id}).then(r => {
+      this.isBuy = true
+    })
+
+    getVideoDetail({id: this.$route.params.id}).then(r => {
+      this.src = WEB_HOST + r.data.file
+      this.coin = r.data.price
+    })
+
+    commentList({
+      video_id: this.$route.params.id,
+      page: 1
+    }).then(r => {
+      this.comments = r.data
+    })
   }
 }
 </script>

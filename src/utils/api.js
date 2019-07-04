@@ -11,10 +11,17 @@ export const getQrcode = _ => r.get('/promotion/qrcode')
 export const allPhotoTypes = _ => r.get('/index/category')
 export const getPhotosByType = p => r.get('/index/gallery', {params: p})
 export const getPhotoDetail = p => r.get('/index/detail', {params: p})
+export const buyPhoto = p => r.post('/gallery/buy', p)
+export const checkBuyPhoto = p => r.get('/gallery/isbuy', {params: p})
 
 // video
 export const allVideoTypes = _ => r.get('/video/category')
 export const getVideoByType = p => r.get('/video', {params: p})
+export const getVideoDetail = p => r.get('/video/detail', {params: p})
+export const buyVideo = p => r.post('/video/buy', p)
+export const checkBuyVideo = p => r.get('/video/isbuy', {params: p})
+export const commentList = p => r.get('/video/comments', {params: p})
+export const postComment = p => r.post('/video/discuss', p)
 
 // recharge-page
 export const getPayTypes = _ => r.get('/score/paylist')

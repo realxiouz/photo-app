@@ -26,13 +26,16 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import { getPhotoDetail } from '@/utils/api'
+import { getPhotoDetail, buyPhoto, checkBuyPhoto } from '@/utils/api'
 import { WEB_HOST } from '@/utils/const'
 
 export default {
   name: 'PhotoDetail',
   mounted () {
     this.getData()
+    checkBuyPhoto({id: this.$route.params.id}).then(r => {
+      this.isBuy = true
+    })
   },
   data: _ => ({
     list: [],
@@ -48,11 +51,14 @@ export default {
     totalCount: 50,
     isBuy: false,
     coin: 100,
-    refresh: true
+    refresh: true,
+
+    selInx: 0
   }),
   methods: {
     ...mapMutations(['setRedirectPath']),
     handleChange (val) {
+      this.selInx = val
       if (val.currentIndex === this.list.length - 1 && !this.isBuy) {
         this.showBuyDialog = true
       }
@@ -65,42 +71,36 @@ export default {
         this.setRedirectPath(this.$route.path)
         this.$router.push({ path: '/login' })
       }
+      buyPhoto({id: this.$route.params.id}).then(r => {
+        this.$vux.toast.text(r.msg)
+        this.list = r.data.gallery_images.map(i => ({src: WEB_HOST + i, w: 0, h: 0}))
+        console.log(this.list)
+        this.isBuy = true
+        setTimeout(_ => {
+          this.$refs.previewer.show(this.selInx)
+        }, 300)
+      }).catch(e => {
+        // todo
+      })
     },
     getData () {
       this.$vux.loading.show({
         text: '加载中'
       })
       getPhotoDetail({id: this.$route.params.id}).then(r => {
-        this.list = r.data.gallery_images.map(i => ({src: WEB_HOST + i}))
+        this.list = r.data.gallery_images.map(i => ({src: WEB_HOST + i, w: 0, h: 0}))
         this.coin = r.data.price
         this.totalCount = r.data.total
-        this.isBuy = this.coin === 0
         this.$nextTick(_ => {
           this.$refs.previewer.show(0)
         })
       }).finally(_ => {
         this.$vux.loading.hide()
       })
-    },
-    resetData () {
-      // this.list = []
-      // this.isBuy = false
-      this.showBuyDialog = false
-      // this.$refs.previewer.close()
-      this.refresh = false
-      this.$nextTick(_ => {
-        this.refresh = true
-      })
     }
   },
   computed: {
     ...mapState(['user'])
-  },
-  activated () {
-    this.getData()
-  },
-  deactivated () {
-    this.resetData()
   }
 }
 </script>

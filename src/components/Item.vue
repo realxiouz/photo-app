@@ -86,6 +86,7 @@ export default {
       margin-right: auto;
       margin-left: auto;
       vertical-align: middle;
+      background: #000;
     }
     .count {
       position: absolute;

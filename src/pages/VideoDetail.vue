@@ -1,17 +1,17 @@
 <template>
   <div>
     <div style="height:60vw">
-      <video :src="src" ref="v" class="video" controls autoplay @ended="handleEnd"></video>
+      <video :src="src" ref="v" class="video" controls autoplay @ended="handleEnd" @timeupdate="handleTime"></video>
     </div>
     <div class="buy-tip" v-if="!isBuy">
-      <span style="color:#999;font-size:16px">免费观看 30 秒,打赏后观看完整版</span>
+      <span style="color:#999;font-size:16px">免费观看 10 秒,打赏后观看完整版</span>
       <div>
         <x-button mini type="primary" @click.native="preCharge">打赏</x-button>
       </div>
     </div>
 
     <group>
-      <x-textarea :max="200" placeholder="购买后可评价资源" v-model="post"></x-textarea>
+      <x-textarea :max="200" placeholder="购买后可评价资源" v-model="post" required ref="ta"></x-textarea>
       <cell>
         <x-button mini type="primary" @click.native="doPost">发送</x-button>
       </cell>
@@ -31,7 +31,7 @@
       </card>
     </group>
     <alert v-model="showBuyDialog" button-text="打赏观看" @on-hide="preCharge">
-      <div>您已观看了30秒</div>
+      <div>您已观看了10秒</div>
       <div>
         只需要打赏
         <span style="color:#f5b527">{{coin}} </span>金币
@@ -44,7 +44,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import { getVideoDetail, buyVideo, checkBuyVideo, commentList, postComment } from '@/utils/api'
-import { WEB_HOST } from '@/utils/const'
+import { WEB_HOST, validateToken } from '@/utils/const'
 
 export default {
   name: 'VideoDetail',
@@ -60,14 +60,24 @@ export default {
   methods: {
     ...mapMutations(['setRedirectPath']),
     preCharge () {
-      if (!this.user) {
+      if (!validateToken(new Date().getTime())) {
         this.setRedirectPath(this.$route.path)
         this.$router.push({ path: '/login' })
+        return
       }
       buyVideo({id: this.$route.params.id}).then(r => {
         this.isBuy = true
       }).catch(e => {
-        // todo
+        this.$vux.confirm.show({
+          title: '余额不足',
+          content: '前往充值',
+          onConfirm: _ => {
+            this.setRedirectPath(this.$route.path)
+            this.$router.push({
+              name: 'Recharge'
+            })
+          }
+        })
       })
     },
     handleEnd () {
@@ -75,7 +85,20 @@ export default {
         this.showBuyDialog = true
       }
     },
+    handleTime () {
+      let t = Math.floor(this.$refs.v.currentTime)
+      if (t >= 10) {
+        if (!this.isBuy) {
+          this.$refs.v.pause()
+          this.showBuyDialog = true
+        }
+      }
+    },
     doPost () {
+      if (!this.$refs.ta.valid) {
+        this.$vux.toast.text('还没有写内容呢')
+        return
+      }
       postComment({
         video_id: this.$route.params.id,
         content: this.post
@@ -88,9 +111,11 @@ export default {
     ...mapState(['user'])
   },
   mounted () {
-    checkBuyVideo({id: this.$route.params.id}).then(r => {
-      this.isBuy = true
-    })
+    if (validateToken(new Date().getTime())) {
+      checkBuyVideo({id: this.$route.params.id}).then(r => {
+        this.isBuy = true
+      })
+    }
 
     getVideoDetail({id: this.$route.params.id}).then(r => {
       this.src = WEB_HOST + r.data.file

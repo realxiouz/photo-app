@@ -97,7 +97,7 @@ export default {
         this.setUser(user)
         this.$vux.toast.text(r.msg)
         this.$router.push({
-          name: 'UserCenter'
+          path: this.redirectPath ? this.redirectPath : '/user-center'
         })
       })
     },
@@ -125,7 +125,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['info'])
+    ...mapState(['info', 'redirectPath'])
   }
 }
 </script>

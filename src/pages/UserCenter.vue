@@ -1,5 +1,6 @@
 <template>
   <div>
+    <scroller lock-x >
     <div style="padding: 0 0 53px">
       <div class="top" @click="$router.push({name: 'EditProfile'})">
         <div class="ava-wrap">
@@ -16,6 +17,7 @@
         <x-button @click.native="handleLogout" type="warn">退出登录</x-button>
       </box>
     </div>
+    </scroller>
     <nav-bottom />
   </div>
 </template>
@@ -62,7 +64,7 @@ export default {
     ...mapMutations(['setUser']),
     handleLogout () {
       logout().then(r => {}).finally(_ => {
-        sessionStorage.removeItem('token')
+        localStorage.removeItem('token')
         this.setUser({})
         this.$vux.toast.text('注销成功')
         this.$router.push({name: 'Login'})

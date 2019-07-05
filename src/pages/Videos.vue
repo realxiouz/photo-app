@@ -4,7 +4,7 @@
       style="position: fixed;top: 0px; z-index:500"
       @on-submit="doSearch"
       @on-cancel="clearSearch"
-      v-model="keywords"
+      v-model="keyword"
     />
     <tab style="position: fixed;top: 44px; z-index:500;left:0;right:0" v-model="tabInx">
       <tab-item
@@ -71,7 +71,7 @@ export default {
     tabInx: 0,
     selTabId: 0,
 
-    keywords: ''
+    keyword: ''
   }),
   methods: {
     getData (resetPage = false) {

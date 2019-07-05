@@ -27,15 +27,17 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import { getPhotoDetail, buyPhoto, checkBuyPhoto } from '@/utils/api'
-import { WEB_HOST } from '@/utils/const'
+import { WEB_HOST, validateToken } from '@/utils/const'
 
 export default {
   name: 'PhotoDetail',
   mounted () {
     this.getData()
-    checkBuyPhoto({id: this.$route.params.id}).then(r => {
-      this.isBuy = true
-    })
+    if (validateToken(new Date().getTime())) {
+      checkBuyPhoto({id: this.$route.params.id}).then(r => {
+        this.isBuy = true
+      })
+    }
   },
   data: _ => ({
     list: [],
@@ -67,20 +69,29 @@ export default {
       this.$router.go(-1)
     },
     preCharge () {
-      if (!this.user) {
+      if (!validateToken(new Date().getTime())) {
         this.setRedirectPath(this.$route.path)
         this.$router.push({ path: '/login' })
+        return
       }
       buyPhoto({id: this.$route.params.id}).then(r => {
         this.$vux.toast.text(r.msg)
         this.list = r.data.gallery_images.map(i => ({src: WEB_HOST + i, w: 0, h: 0}))
-        console.log(this.list)
         this.isBuy = true
         setTimeout(_ => {
           this.$refs.previewer.show(this.selInx)
         }, 300)
       }).catch(e => {
-        // todo
+        this.$vux.confirm.show({
+          title: '余额不足',
+          content: '前往充值',
+          onConfirm: _ => {
+            this.setRedirectPath(this.$route.path)
+            this.$router.push({
+              name: 'Recharge'
+            })
+          }
+        })
       })
     },
     getData () {

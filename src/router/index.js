@@ -153,6 +153,15 @@ const router = new Router({
       meta: {
         title: '资料编辑'
       }
+    },
+    {
+      path: '/my-order',
+      name: 'MyOrder',
+      component: _ => import('@/pages/MyOrder'),
+      meta: {
+        title: '我的订单',
+        auth: true
+      }
     }
   ]
 })

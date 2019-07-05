@@ -45,6 +45,9 @@ axios.interceptors.response.use(
         console.warn('token失效')
         router.push({path: '/login'})
       }
+      if (e.response.status === 500) {
+        Vue.$vux.toast.text('服务器出错了!')
+      }
       return Promise.reject(new Error(e.response))
     }
     return Promise.reject(e)

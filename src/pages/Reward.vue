@@ -14,10 +14,10 @@
         <div slot="title">首充红包 &nbsp;<badge text="500金币"/></div>
         <x-button mini type="primary" @click.native="handleRecharge">领红包</x-button>
       </cell>
-      <cell inline-desc="他人通过你分享二维码进行消费">
+      <!-- <cell inline-desc="他人通过你分享二维码进行消费">
         <div slot="title">分享赚钱 &nbsp;<badge text="他人消费金币20%"/></div>
         <x-button mini type="primary" @click.native="handleQrcode">生成二维码</x-button>
-      </cell>
+      </cell> -->
     </group>
 
     <!-- <div v-transfer-dom> -->

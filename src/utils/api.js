@@ -13,6 +13,7 @@ export const getPhotosByType = p => r.get('/index/gallery', {params: p})
 export const getPhotoDetail = p => r.get('/index/detail', {params: p})
 export const buyPhoto = p => r.post('/gallery/buy', p)
 export const checkBuyPhoto = p => r.get('/gallery/isbuy', {params: p})
+export const orderPhoto = p => r.get('/gallery_order', {params: p})
 
 // video
 export const allVideoTypes = _ => r.get('/video/category')
@@ -22,6 +23,7 @@ export const buyVideo = p => r.post('/video/buy', p)
 export const checkBuyVideo = p => r.get('/video/isbuy', {params: p})
 export const commentList = p => r.get('/video/comments', {params: p})
 export const postComment = p => r.post('/video/discuss', p)
+export const orderVideo = p => r.get('/video_order', {params: p})
 
 // recharge-page
 export const getPayTypes = _ => r.get('/score/paylist')

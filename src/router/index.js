@@ -162,6 +162,15 @@ const router = new Router({
         title: '我的订单',
         auth: true
       }
+    },
+    {
+      path: '/qrcode',
+      name: 'Qrcode',
+      component: _ => import('@/pages/Qrcode'),
+      meta: {
+        title: '二维码',
+        auth: true
+      }
     }
   ]
 })

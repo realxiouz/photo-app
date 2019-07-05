@@ -19,15 +19,6 @@
     </div>
     </scroller>
     <nav-bottom />
-
-    <confirm
-      v-model="qrCodeDialog"
-      @on-confirm="saveQrCode"
-      confirm-text="保存二维码"
-      :show-cancel-button="false"
-    >
-      <img style="width:160px;height:160px" :src="qrCodeSrc" />
-    </confirm>
   </div>
 </template>
 
@@ -35,7 +26,7 @@
 import { Group, Cell } from 'vux'
 import { mapState, mapMutations } from 'vuex'
 import { WEB_HOST } from '@/utils/const'
-import { logout, getQrcode } from '@/utils/api'
+import { logout } from '@/utils/api'
 import NavBottom from '@/components/NavBar'
 
 export default {
@@ -50,9 +41,9 @@ export default {
       groups: [
         [
           {title: '我的钱包', src: require('../assets/card.png'), link: '/my-wallet'},
-          {title: '我的二维码', src: require('../assets/code.png'), link: ''},
+          {title: '我的二维码', src: require('../assets/code.png'), link: '/qrcode'},
           {title: '我的订单', src: require('../assets/order.png'), link: '/my-order'},
-          {title: '红包任务', src: require('../assets/reward.png'), link: '/reward'},
+          {title: '红包任务', src: require('../assets/reward.png'), link: '/reward'}
           // {title: '我要赚钱', src: require('../assets/money.png'), link: ''},
           // {title: '成为合伙人', src: require('../assets/member.png'), link: ''},
           // {title: '加盟&代理', src: require('../assets/vux_logo.png'), link: ''},
@@ -61,18 +52,11 @@ export default {
           // {title: '加油卡充值', src: require('../assets/oil.png'), link: ''},
           // {title: '话费充值', src: require('../assets/phone.png'), link: ''}
         ]
-      ],
-      qrCodeSrc: '',
-      qrCodeDialog: false
+      ]
     }
   },
   computed: {
     ...mapState(['user'])
-  },
-  mounted () {
-    getQrcode().then(r => {
-      this.qrCodeSrc = WEB_HOST + r.data
-    })
   },
   methods: {
     ...mapMutations(['setUser']),
@@ -83,12 +67,6 @@ export default {
         this.$vux.toast.text('注销成功')
         this.$router.push({name: 'Login'})
       })
-    },
-    saveQrCode () {
-      let a = document.createElement('a')
-      a.setAttribute('href', this.qrCodeSrc)
-      a.setAttribute('download', 'qrcode.png')
-      a.click()
     }
   }
 }

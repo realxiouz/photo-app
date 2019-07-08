@@ -28,7 +28,7 @@
 
 <script>
 import Item from '@/components/Item'
-import NavBottom from '@/components/NavBar'
+import NavBottom from '@/components/NavBar1'
 
 import {
   Box,

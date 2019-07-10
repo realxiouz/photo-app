@@ -8,8 +8,9 @@
         </div>
         <div class="name">{{user.nickname||user.mobile}}</div>
       </div>
-      <group v-for="(item, index) in groups" :key="`group${index}`">
-        <cell :title="i.title" :is-link="!!i.link" v-for="(i, inx) in item" :key="`group${index}cell${inx}`" :link="i.link">
+      <group v-for="(item, index) in groups" :key="`group${index}`" :title="item.text">
+        <cell :title="i.title" :is-link="!!i.link" v-for="(i, inx) in item.children" :key="`group${index}cell${inx}`" :link="i.link">
+          <span slot="after-title" v-if="i.des" style="font-size:14px;color:gray">{{i.des}}</span>
           <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="i.src"/>
         </cell>
       </group>
@@ -27,7 +28,7 @@ import { Group, Cell } from 'vux'
 import { mapState, mapMutations } from 'vuex'
 import { WEB_HOST } from '@/utils/const'
 import { logout } from '@/utils/api'
-import NavBottom from '@/components/NavBar'
+import NavBottom from '@/components/NavBar1'
 
 export default {
   components: {
@@ -39,19 +40,51 @@ export default {
     return {
       webHost: WEB_HOST,
       groups: [
-        [
-          {title: '我的钱包', src: require('../assets/card.png'), link: '/my-wallet'},
-          {title: '我的二维码', src: require('../assets/code.png'), link: '/qrcode'},
-          {title: '我的订单', src: require('../assets/order.png'), link: '/my-order'},
-          {title: '红包任务', src: require('../assets/reward.png'), link: '/reward'}
-          // {title: '我要赚钱', src: require('../assets/money.png'), link: ''},
-          // {title: '成为合伙人', src: require('../assets/member.png'), link: ''},
-          // {title: '加盟&代理', src: require('../assets/vux_logo.png'), link: ''},
-          // {title: '我要约拍', src: require('../assets/vux_logo.png'), link: ''},
-          // {title: '商务合作', src: require('../assets/vux_logo.png'), link: ''},
-          // {title: '加油卡充值', src: require('../assets/oil.png'), link: ''},
-          // {title: '话费充值', src: require('../assets/phone.png'), link: ''}
-        ]
+        {
+          text: '我的账户',
+          children: [
+            {title: '红包任务', src: require('../assets/card.png'), link: '/my-wallet'},
+            {title: '分享推广', src: require('../assets/code.png'), link: '/qrcode'},
+            {title: '兑换礼品', src: require('../assets/order.png'), link: '/my-order', des: '(金币可兑换礼品)'}
+          ]
+        },
+        {
+          text: '我的钱包',
+          children: [
+            {title: '钱包金币', src: require('../assets/card.png'), link: '/my-wallet'},
+            {title: '钱包资金', src: require('../assets/code.png'), link: '/qrcode', des: '(100元倍数可提现)'},
+            {title: '钱包明细', src: require('../assets/order.png'), link: '/my-order'}
+          ]
+        },
+        {
+          text: '我要赚钱',
+          children: [
+            {title: '看图/文赚钱', src: require('../assets/card.png'), link: '/my-wallet'},
+            {title: '投稿赚钱', src: require('../assets/code.png'), link: '/qrcode', des: '(合伙人上传套图)'},
+            {title: '发展新合伙人', src: require('../assets/order.png'), link: '/my-order'}
+          ]
+        },
+        {
+          text: '我要合作',
+          children: [
+            {title: '加盟/代理', src: require('../assets/card.png'), link: '/my-wallet'},
+            {title: '我要约拍', src: require('../assets/code.png'), link: '/qrcode', des: '(模特or摄影师)'},
+            {title: '商务合作', src: require('../assets/order.png'), link: '/my-order'}
+          ]
+        }
+        // [
+        //   {title: '我的钱包', src: require('../assets/card.png'), link: '/my-wallet'},
+        //   {title: '我的二维码', src: require('../assets/code.png'), link: '/qrcode'},
+        //   {title: '我的订单', src: require('../assets/order.png'), link: '/my-order'},
+        //   {title: '红包任务', src: require('../assets/reward.png'), link: '/reward'}
+        //   {title: '我要赚钱', src: require('../assets/money.png'), link: ''},
+        //   {title: '成为合伙人', src: require('../assets/member.png'), link: ''},
+        //   {title: '加盟&代理', src: require('../assets/vux_logo.png'), link: ''},
+        //   {title: '我要约拍', src: require('../assets/vux_logo.png'), link: ''},
+        //   {title: '商务合作', src: require('../assets/vux_logo.png'), link: ''},
+        //   {title: '加油卡充值', src: require('../assets/oil.png'), link: ''},
+        //   {title: '话费充值', src: require('../assets/phone.png'), link: ''}
+        // ]
       ]
     }
   },
@@ -88,7 +121,7 @@ export default {
   text-align: center;
   box-sizing: border-box;
   padding-top: 45px;
-  background: #ff4d67;
+  background: #FFAF00;
   .ava-wrap{
     width: 80px;
     height: 80px;

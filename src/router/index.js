@@ -171,6 +171,15 @@ const router = new Router({
         title: '二维码',
         auth: true
       }
+    },
+    {
+      path: '/articles',
+      name: 'Articles',
+      component: _ => import('@/pages/Articles'),
+      meta: {
+        title: '图文',
+        auth: true
+      }
     }
   ]
 })

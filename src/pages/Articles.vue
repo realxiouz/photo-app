@@ -6,20 +6,20 @@
       @on-cancel="clearSearch"
       v-model="keyword"
     />
-    <tab style="position: fixed;top: 44px; z-index:500;left:0;right:0" v-model="tabInx">
-      <!-- <tab-item
+    <!-- <tab style="position: fixed;top: 44px; z-index:500;left:0;right:0" v-model="tabInx">
+      <tab-item
         v-for="(i, inx) in tabs"
         :key="inx"
         @on-item-click="handleItemSelect(i)"
-      >{{i.name}}</tab-item> -->
-    </tab>
+      >{{i.name}}</tab-item>
+    </tab> -->
     <scroller
       lock-x
       @on-scroll-bottom="handleMore"
       ref="pv"
     >
       <div style="padding: 88px 0 53px 0">
-        xiongdei,来到了home
+        兄嘚,看图文赚钱了
       </div>
     </scroller>
     <nav-bottom />
@@ -29,7 +29,6 @@
 <script>
 import Item from '@/components/Item'
 import NavBottom from '@/components/NavBar1'
-
 import {
   Box,
   XButton,
@@ -41,8 +40,7 @@ import {
   Tabbar,
   TabbarItem
 } from 'vux'
-import { PHOTOS } from '@/utils/const'
-import { allPhotoTypes, getPhotosByType } from '@/utils/api'
+import { allVideoTypes, getVideoByType } from '@/utils/api'
 
 export default {
   components: {
@@ -66,7 +64,7 @@ export default {
 
     tabs: [],
     tabInx: 0,
-    selTabId: '',
+    selTabId: 0,
 
     keyword: ''
   }),
@@ -86,7 +84,7 @@ export default {
         page: this.page,
         keyword: this.keyword
       }
-      getPhotosByType(p).then(r => {
+      getVideoByType(p).then(r => {
         let data = r.data
         if (this.page === 1) {
           this.list = []
@@ -105,7 +103,7 @@ export default {
       })
     },
     handleMore () {
-      if (!this.isLoading && !this.isEnd) {
+      if (!this.isLoading) {
         this.page++
         this.getData()
       }
@@ -114,38 +112,21 @@ export default {
       this.getData(true)
     },
     clearSearch () {
-      this.keyword = ''
       this.getData(true)
-    },
-    mockData () {
-      let arr = []
-      for (let i = 0; i < 4; i++) {
-        arr.push({
-          id: i + 1,
-          title: '花漾写真 [HuaYang] 2019.06.10 VOL.146 王雨纯',
-          src: PHOTOS[Math.floor(Math.random() * PHOTOS.length)],
-          count: 0,
-          avatar: 'http://file.idray.com//Image/Brand/huayang.jpg!wh50',
-          name: '花漾show',
-          time: '2019-06-10',
-          userId: 12
-        })
-      }
-      return arr
     },
     handleItemSelect (i) {
       this.selTabId = i.id
     }
   },
   watch: {
-    selTabId (val) {
-      if (val) {
+    selTabId: {
+      handler (val) {
         this.getData(true)
       }
     }
   },
   mounted () {
-    allPhotoTypes().then(r => {
+    allVideoTypes().then(r => {
       this.tabs = r.data
       if (this.tabs.length) {
         this.selTabId = this.tabs[0].id
@@ -154,3 +135,4 @@ export default {
   }
 }
 </script>
+

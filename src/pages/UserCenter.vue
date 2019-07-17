@@ -43,7 +43,7 @@ export default {
         {
           text: '我的账户',
           children: [
-            {title: '红包任务', src: require('../assets/card.png'), link: '/my-wallet'},
+            {title: '红包任务', src: require('../assets/card.png'), link: '/reward'},
             {title: '分享推广', src: require('../assets/code.png'), link: '/qrcode'},
             {title: '兑换礼品', src: require('../assets/order.png'), link: '/my-order', des: '(金币可兑换礼品)'}
           ]

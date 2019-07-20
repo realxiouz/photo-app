@@ -180,6 +180,24 @@ const router = new Router({
         title: '图文',
         auth: true
       }
+    },
+    {
+      path: '/money-tip',
+      name: 'MoneyTip',
+      component: _ => import('@/pages/MoneyTip'),
+      meta: {
+        title: '赚钱秘籍',
+        auth: true
+      }
+    },
+    {
+      path: '/my-group',
+      name: 'MyGroup',
+      component: _ => import('@/pages/MyGroup'),
+      meta: {
+        title: '我的团队',
+        auth: true
+      }
     }
   ]
 })

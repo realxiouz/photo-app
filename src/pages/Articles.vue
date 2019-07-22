@@ -6,20 +6,25 @@
       @on-cancel="clearSearch"
       v-model="keyword"
     />
-    <!-- <tab style="position: fixed;top: 44px; z-index:500;left:0;right:0" v-model="tabInx">
+    <tab style="position: fixed;top: 44px; z-index:500;left:0;right:0" v-model="tabInx">
       <tab-item
         v-for="(i, inx) in tabs"
         :key="inx"
         @on-item-click="handleItemSelect(i)"
       >{{i.name}}</tab-item>
-    </tab> -->
+    </tab>
     <scroller
       lock-x
       @on-scroll-bottom="handleMore"
       ref="pv"
     >
       <div style="padding: 88px 0 53px 0">
-        兄嘚,看图文赚钱了
+        <item
+          v-for="(i, inx) in list"
+          :key="inx"
+          :bean="i"
+          :type="i.type"
+        />
       </div>
     </scroller>
     <nav-bottom />
@@ -27,7 +32,7 @@
 </template>
 
 <script>
-import Item from '@/components/Item'
+import Item from '@/components/ArticleItem'
 import NavBottom from '@/components/NavBar1'
 import {
   Box,
@@ -57,12 +62,37 @@ export default {
     NavBottom
   },
   data: _ => ({
-    list: [],
+    list: [
+      {
+        type: 0,
+        id: 1,
+      },
+      {
+        type: 1,
+        id: 2
+      },
+      {
+        type: 0,
+        id: 3
+      },
+      {
+        type: 1,
+        id: 4
+      }
+    ],
     page: 1,
     isLoading: false,
     isEnd: false,
 
-    tabs: [],
+    tabs: [
+      {id: 1, name: '热点'},
+      {id: 1, name: '社会'},
+      {id: 1, name: '娱乐'},
+      {id: 1, name: '军事'},
+      {id: 1, name: '房产'},
+      {id: 1, name: '家居'},
+      {id: 1, name: '科技'}
+    ],
     tabInx: 0,
     selTabId: 0,
 
@@ -126,12 +156,12 @@ export default {
     }
   },
   mounted () {
-    allVideoTypes().then(r => {
-      this.tabs = r.data
-      if (this.tabs.length) {
-        this.selTabId = this.tabs[0].id
-      }
-    })
+    // allVideoTypes().then(r => {
+    //   this.tabs = r.data
+    //   if (this.tabs.length) {
+    //     this.selTabId = this.tabs[0].id
+    //   }
+    // })
   }
 }
 </script>

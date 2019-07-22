@@ -58,7 +58,7 @@ const router = new Router({
     },
     {
       path: '/',
-      redirect: '/home'
+      redirect: '/articles'
     },
     {
       path: '/home',
@@ -178,7 +178,16 @@ const router = new Router({
       component: _ => import('@/pages/Articles'),
       meta: {
         title: '图文',
-        auth: true
+        auth: false
+      }
+    },
+    {
+      path: '/article-detail/:id',
+      name: 'ArticleDetail',
+      component: _ => import('@/pages/ArticleDetail'),
+      meta: {
+        title: '图文详情',
+        auth: false
       }
     },
     {

@@ -16,7 +16,7 @@ export default {
     barData: [
       {text: '首页', src: require('@/assets/home-active.png'), active: require('@/assets/test.png'), path: '/home'},
       {text: '套图', src: require('@/assets/photo-active.png'), active: require('@/assets/test.png'), path: '/photos'},
-      {text: '看图文', src: require('@/assets/money.png'), active: require('@/assets/test.png'), path: '/articles'},
+      {text: '看图/文赚钱', src: require('@/assets/money.png'), active: require('@/assets/test.png'), path: '/articles'},
       {text: '视屏', src: require('@/assets/video-active.png'), active: require('@/assets/test.png'), path: '/videos'},
       {text: '我的', src: require('@/assets/me-active.png'), active: require('@/assets/test.png'), path: '/user-center'}
     ]
@@ -86,6 +86,7 @@ export default {
       bottom: 0;
       left: 50%;
       transform: translate(-50%, 0);
+      width:100%;
     }
   }
 }

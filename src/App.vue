@@ -14,7 +14,7 @@ import { validateToken } from '@/utils/const'
 export default {
   name: 'app',
   data: _ => ({
-    exclude: ['PayResult', 'PhotoDetail', 'Rechange', 'OrderList', 'VideoDetail', 'ArticleDetail']
+    exclude: ['PayResult', 'PhotoDetail', 'Rechange', 'OrderList', 'VideoDetail', 'ArticleDetail', 'MoneyTip']
   }),
   mounted () {
     if (validateToken(new Date().getTime())) {

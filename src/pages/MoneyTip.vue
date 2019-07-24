@@ -1,11 +1,39 @@
 <template>
-  <div v-html="tip" style="padding: 15px"></div>
+  <div>
+    <div v-html="tip" ref="tip"></div>
+    <box gap="10px 10px">
+      <x-button type="primary" link="">去赚钱</x-button>
+    </box>
+  </div>
 </template>
 
 <script>
+import { moneyTip, withdrawTip, articleTip, contributeTip, partnerTip, joinTip, yuepaiTip, cooperationTip } from '@/utils/api'
+
 export default {
+  name: 'MoneyTip',
+  mounted () {
+    let allMethod = {
+      '0': moneyTip,
+      '1': withdrawTip,
+      '2': articleTip,
+      '3': contributeTip,
+      '4': partnerTip,
+      '5': joinTip,
+      '6': yuepaiTip,
+      '7': cooperationTip
+    }
+    let getData = allMethod[this.$route.params.type]
+    getData().then(r => {
+      this.tip = r.data.content
+      this.$nextTick(_ => {
+        this.$refs.tip.querySelector('img').style.width = '100%'
+        this.$refs.tip.querySelector('img').style.height = 'auto'
+      })
+    })
+  },
   data: _ => ({
-    tip: `<p style="text-align: center;"><span style="font-size: 20px; color: rgb(79, 129, 189);"><strong>快来赚钱了兄嘚</strong></span></p><p><span style="font-size: 20px; color: rgb(29, 27, 16);"><strong>看新闻能赚钱</strong></span></p><p><font color="#4f81bd"><span style="font-size: 20px; color: rgb(29, 27, 16);"><b>就等你了兄嘚...</b></span></font></p><p><font color="#4f81bd"><span style="font-size: 20px; color: rgb(29, 27, 16);"><b><br/></b></span></font></p><p style="text-align: center;"><font color="#4f81bd"><span style="background-color: rgb(0, 176, 240); color: rgb(255, 255, 255); font-size: 36px;"><b>是兄弟一起赚钱</b></span></font></p><p><font color="#4f81bd"><span style="background-color: rgb(0, 176, 240); color: rgb(255, 255, 255); font-size: 36px;"><b><br/></b></span></font></p><p><img src="http://img.baidu.com/hi/jx2/j_0003.gif"/><img src="http://img.baidu.com/hi/jx2/j_0042.gif"/></p><p><br/></p><p style="text-align: right;">By: 张全蛋</p><p style="text-align: right;">2019-08-08</p>`
+    tip: ''
   })
 }
 </script>

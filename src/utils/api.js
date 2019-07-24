@@ -37,3 +37,18 @@ export const uploadFile = p => r.post('/common/upload', p)
 //
 export const editProfile = p => r.post('/user/profile', p)
 export const logout = _ => r.post('/user/logout')
+
+// article
+export const allArticleTypes = _ => r.post('/article/category')
+export const getArticleByType = p => r.get('/article', {params: p})
+export const getArticleDetail = p => r.get('/article/detail', {params: p})
+
+//
+export const moneyTip = _ => r.get('/index/book')
+export const withdrawTip = _ => r.get('/index/distribution_rule')
+export const articleTip = _ => r.get('/index/news_content')
+export const contributeTip = _ => r.get('/index/contribution_content')
+export const partnerTip = _ => r.get('/index/partner_content')
+export const joinTip = _ => r.get('/index/join_content')
+export const yuepaiTip = _ => r.get('/index/yuepai_content')
+export const cooperationTip = _ => r.get('/index/cooperation_content')

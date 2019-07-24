@@ -45,7 +45,7 @@ import {
   Tabbar,
   TabbarItem
 } from 'vux'
-import { allVideoTypes, getVideoByType } from '@/utils/api'
+import { allArticleTypes, getArticleByType } from '@/utils/api'
 
 export default {
   components: {
@@ -65,7 +65,7 @@ export default {
     list: [
       {
         type: 0,
-        id: 1,
+        id: 1
       },
       {
         type: 1,
@@ -84,15 +84,7 @@ export default {
     isLoading: false,
     isEnd: false,
 
-    tabs: [
-      {id: 1, name: '热点'},
-      {id: 1, name: '社会'},
-      {id: 1, name: '娱乐'},
-      {id: 1, name: '军事'},
-      {id: 1, name: '房产'},
-      {id: 1, name: '家居'},
-      {id: 1, name: '科技'}
-    ],
+    tabs: [],
     tabInx: 0,
     selTabId: 0,
 
@@ -114,7 +106,7 @@ export default {
         page: this.page,
         keyword: this.keyword
       }
-      getVideoByType(p).then(r => {
+      getArticleByType(p).then(r => {
         let data = r.data
         if (this.page === 1) {
           this.list = []
@@ -156,12 +148,12 @@ export default {
     }
   },
   mounted () {
-    // allVideoTypes().then(r => {
-    //   this.tabs = r.data
-    //   if (this.tabs.length) {
-    //     this.selTabId = this.tabs[0].id
-    //   }
-    // })
+    allArticleTypes().then(r => {
+      this.tabs = r.data
+      if (this.tabs.length) {
+        this.selTabId = this.tabs[0].id
+      }
+    })
   }
 }
 </script>

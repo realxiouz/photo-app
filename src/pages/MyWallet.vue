@@ -21,7 +21,7 @@
 
     <group>
       <cell :title="`可提现佣金`" is-link></cell>
-      <cell title="提现规则" is-link></cell>
+      <cell title="提现规则" link="/money-tip/1"></cell>
     </group>
 
     <group>

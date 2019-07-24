@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import moment from "moment"
+import moment from 'moment'
 
 export default {
   props: {
@@ -45,9 +45,9 @@ export default {
   data: _ => ({
     bean1: {
       title:
-        "酝酿了259天的科创板在上交所交易大厅内迎来开市的锣声，第一批25家科创板公司正式上市交易。截至发稿，安集科技涨幅最高，达287.85%。",
+        '酝酿了259天的科创板在上交所交易大厅内迎来开市的锣声，第一批25家科创板公司正式上市交易。截至发稿，安集科技涨幅最高，达287.85%。',
       type: 0,
-      auth: "央视网新闻",
+      auth: '央视网新闻',
       view_count: 30,
       createtime: 1562292831,
       is_top: true,
@@ -55,18 +55,18 @@ export default {
     },
     bean2: {
       title:
-        "酝酿了259天的科创板在上交所交易大厅内迎来开市的锣声，第一批25家科创板公司正式上市交易。截至发稿，安集科技涨幅最高，达287.85%。",
+        '酝酿了259天的科创板在上交所交易大厅内迎来开市的锣声，第一批25家科创板公司正式上市交易。截至发稿，安集科技涨幅最高，达287.85%。',
       type: 0,
-      auth: "央视网新闻",
+      auth: '央视网新闻',
       view_count: 30,
       createtime: 1562292831,
       is_top: true,
       is_hot: false,
-      img: "https://p3.pstatp.com/list/pgc-image/RWugmIS8z2e3hh"
+      img: 'https://p3.pstatp.com/list/pgc-image/RWugmIS8z2e3hh'
     },
     moment
   })
-};
+}
 </script>
 
 <style lang="less" scoped>

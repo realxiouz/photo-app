@@ -191,11 +191,11 @@ const router = new Router({
       }
     },
     {
-      path: '/money-tip',
+      path: '/money-tip/:type?',
       name: 'MoneyTip',
       component: _ => import('@/pages/MoneyTip'),
       meta: {
-        title: '赚钱秘籍',
+        title: '秘籍',
         auth: true
       }
     },

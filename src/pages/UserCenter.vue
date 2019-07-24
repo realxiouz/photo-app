@@ -9,7 +9,7 @@
           <div class="name">{{user.nickname||user.mobile}}</div>
         </div>
         <div class="f3">
-          <div class="item" @click="$router.push('/money-tip')">赚钱秘籍</div>
+          <div class="item" @click="$router.push('/money-tip/0')">赚钱秘籍</div>
           <div class="item" @click="$router.push('/qrcode')">我的二维码</div>
           <div class="item" @click="$router.push('/my-group')">我的团队</div>
         </div>
@@ -84,17 +84,17 @@ export default {
         {
           text: '我要赚钱',
           children: [
-            {title: '看图/文赚钱', src: require('../assets/card.png'), link: ''},
-            {title: '投稿赚钱', src: require('../assets/code.png'), link: '', des: '(合伙人上传套图)'},
-            {title: '发展新合伙人', src: require('../assets/order.png'), link: ''}
+            {title: '看图/文赚钱', src: require('../assets/card.png'), link: '/money-tip/2'},
+            {title: '投稿赚钱', src: require('../assets/code.png'), link: '/money-tip/3', des: '(合伙人上传套图)'},
+            {title: '发展新合伙人', src: require('../assets/order.png'), link: '/money-tip/4'}
           ]
         },
         {
           text: '我要合作',
           children: [
-            {title: '加盟/代理', src: require('../assets/card.png'), link: ''},
-            {title: '我要约拍', src: require('../assets/code.png'), link: '', des: '(模特or摄影师)'},
-            {title: '商务合作', src: require('../assets/order.png'), link: ''}
+            {title: '加盟/代理', src: require('../assets/card.png'), link: '/money-tip/5'},
+            {title: '我要约拍', src: require('../assets/code.png'), link: '/money-tip/6', des: '(模特or摄影师)'},
+            {title: '商务合作', src: require('../assets/order.png'), link: '/money-tip/7'}
           ]
         }
         // [

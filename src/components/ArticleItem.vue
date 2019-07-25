@@ -1,38 +1,39 @@
 <template>
   <div class="item-detail" @click="$router.push(`/article-detail/${bean.id}`)">
     <div v-if="type===0" class="item type0">
-      <div class="title">{{bean1.title}}</div>
+      <div class="title">{{bean.title}}</div>
       <div class="info">
-        <div class="item-tag" v-if="bean1.is_top">置顶</div>
-        <div class="item-tag" v-if="bean1.is_hot">热</div>
-        <div class="auth">{{bean1.auth}}</div>
-        <div class="v-count">浏览量&nbsp;{{bean1.view_count}}</div>
-        <div class="c-time">{{moment(bean1.createtime*1000).format('YYYY-MM-DD')}}</div>
+        <div class="item-tag" v-if="bean.is_top">置顶</div>
+        <div class="item-tag" v-if="bean.is_hot">热</div>
+        <div class="auth">{{bean.auth}}</div>
+        <div class="v-count">浏览量&nbsp;{{bean.pv}}</div>
+        <div class="c-time">{{moment().from(bean.createtime*1000)}}</div>
       </div>
     </div>
     <div v-if="type===1" class="item type1">
       <div class="left">
-        <div class="title">{{bean2.title}}</div>
+        <div class="title">{{bean.title}}</div>
         <div class="info">
-          <div class="item-tag" v-if="bean2.is_top">置顶</div>
-          <div class="item-tag" v-if="bean2.is_hot">热</div>
-          <div class="auth">{{bean2.auth}}</div>
-          <div class="v-count">浏览量&nbsp;{{bean2.view_count}}</div>
-          <!-- <div class="c-time">{{moment().from(bean2.createtime*1000)}}</div> -->
+          <div class="item-tag" v-if="bean.is_top">置顶</div>
+          <div class="item-tag" v-if="bean.is_hot">热</div>
+          <div class="auth">{{bean.auth}}</div>
+          <div class="v-count">浏览量&nbsp;{{bean.pv}}</div>
+          <!-- <div class="c-time">{{moment().from(bean.createtime*1000)}}</div> -->
         </div>
       </div>
       <div class="right">
-        <img :src="bean2.img" alt />
+        <img :src="webHost+bean.thumbimage" alt />
       </div>
     </div>
     <div v-if="type===3" class="item type3">
-      <div class="title">{{bean1.title}}</div>
+      <div class="title">{{bean.title}}</div>
     </div>
   </div>
 </template>
 
 <script>
 import moment from 'moment'
+import { WEB_HOST } from '@/utils/const'
 
 export default {
   props: {
@@ -43,28 +44,8 @@ export default {
     bean: Object
   },
   data: _ => ({
-    bean1: {
-      title:
-        '酝酿了259天的科创板在上交所交易大厅内迎来开市的锣声，第一批25家科创板公司正式上市交易。截至发稿，安集科技涨幅最高，达287.85%。',
-      type: 0,
-      auth: '央视网新闻',
-      view_count: 30,
-      createtime: 1562292831,
-      is_top: true,
-      is_hot: true
-    },
-    bean2: {
-      title:
-        '酝酿了259天的科创板在上交所交易大厅内迎来开市的锣声，第一批25家科创板公司正式上市交易。截至发稿，安集科技涨幅最高，达287.85%。',
-      type: 0,
-      auth: '央视网新闻',
-      view_count: 30,
-      createtime: 1562292831,
-      is_top: true,
-      is_hot: false,
-      img: 'https://p3.pstatp.com/list/pgc-image/RWugmIS8z2e3hh'
-    },
-    moment
+    moment,
+    webHost: WEB_HOST
   })
 }
 </script>

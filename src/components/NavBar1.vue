@@ -14,11 +14,11 @@
 export default {
   data: _ => ({
     barData: [
-      {text: '首页', src: require('@/assets/home-active.png'), active: require('@/assets/test.png'), path: '/home'},
-      {text: '套图', src: require('@/assets/photo-active.png'), active: require('@/assets/test.png'), path: '/photos'},
-      {text: '看图/文赚钱', src: require('@/assets/money.png'), active: require('@/assets/test.png'), path: '/articles'},
-      {text: '视屏', src: require('@/assets/video-active.png'), active: require('@/assets/test.png'), path: '/videos'},
-      {text: '我的', src: require('@/assets/me-active.png'), active: require('@/assets/test.png'), path: '/user-center'}
+      {text: '首页', src: require('@/assets/home1.jpg'), active: require('@/assets/test.png'), path: '/home'},
+      {text: '套图', src: require('@/assets/photo1.jpg'), active: require('@/assets/test.png'), path: '/photos'},
+      {text: '看图/文赚钱', src: require('@/assets/money1.jpg'), active: require('@/assets/test.png'), path: '/articles'},
+      {text: '视屏', src: require('@/assets/video1.jpg'), active: require('@/assets/test.png'), path: '/videos'},
+      {text: '我的', src: require('@/assets/me1.jpg'), active: require('@/assets/test.png'), path: '/user-center'}
     ]
   })
 }
@@ -31,7 +31,8 @@ export default {
   z-index: 500;
   bottom: 0;
   width: 100%;
-  background-color: #252C36;
+  // background-color: #252C36;
+  background-color: #000000;
   height: 53px;
   &::before{
     content: " ";
@@ -54,7 +55,8 @@ export default {
     position: relative;
     &.active{
       .img-warp{
-        background: #252C36;
+        // background: #252C36;
+        background-color: #000;
         padding: 5px 5px;
         border-top-left-radius: 50%;
         border-top-right-radius: 50%;

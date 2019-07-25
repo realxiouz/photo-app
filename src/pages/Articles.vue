@@ -23,7 +23,7 @@
           v-for="(i, inx) in list"
           :key="inx"
           :bean="i"
-          :type="i.type"
+          :type="i.thumbimage ? 1 : 0"
         />
       </div>
     </scroller>
@@ -62,24 +62,7 @@ export default {
     NavBottom
   },
   data: _ => ({
-    list: [
-      {
-        type: 0,
-        id: 1
-      },
-      {
-        type: 1,
-        id: 2
-      },
-      {
-        type: 0,
-        id: 3
-      },
-      {
-        type: 1,
-        id: 4
-      }
-    ],
+    list: [],
     page: 1,
     isLoading: false,
     isEnd: false,
@@ -125,7 +108,7 @@ export default {
       })
     },
     handleMore () {
-      if (!this.isLoading) {
+      if (!this.isLoading && !this.isEnd) {
         this.page++
         this.getData()
       }
